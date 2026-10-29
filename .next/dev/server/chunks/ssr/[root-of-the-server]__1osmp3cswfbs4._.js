@@ -1705,19 +1705,45 @@ __turbopack_context__.s([
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$dotenv$40$18$2e$0$2e$9$2f$node_modules$2f$dotenv$2f$dist$2f$config$2e$cjs__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/.pnpm/dotenv@18.0.9/node_modules/dotenv/dist/config.cjs [app-rsc] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$externals$5d2f40$prisma$2f$client__$5b$external$5d$__$2840$prisma$2f$client$2c$__cjs$2c$__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$prisma$2b$client$40$7$2e$10$2e$1_prisma$40$7$2e$10$2e$1_$40$types$2b$node$40$20$2e$19$2e$43_$40$types$2b$react$2d$dom$40$19$2e$3$2e$0_$40$types_009596b32b6df6855faa5522417f426e$2f$node_modules$2f40$prisma$2f$client$29$__ = __turbopack_context__.i("[externals]/@prisma/client [external] (@prisma/client, cjs, [project]/node_modules/.pnpm/@prisma+client@7.10.1_prisma@7.10.1_@types+node@20.19.43_@types+react-dom@19.3.0_@types_009596b32b6df6855faa5522417f426e/node_modules/@prisma/client)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$prisma$2b$adapter$2d$pg$40$7$2e$10$2e$1$2f$node_modules$2f40$prisma$2f$adapter$2d$pg$2f$dist$2f$index$2e$mjs__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/.pnpm/@prisma+adapter-pg@7.10.1/node_modules/@prisma/adapter-pg/dist/index.mjs [app-rsc] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$externals$5d2f$pg__$5b$external$5d$__$28$pg$2c$__esm_import$2c$__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$pg$40$8$2e$23$2e$1$2f$node_modules$2f$pg$29$__ = __turbopack_context__.i("[externals]/pg [external] (pg, esm_import, [project]/node_modules/.pnpm/pg@8.23.1/node_modules/pg)");
 var __turbopack_async_dependencies__ = __turbopack_handle_async_dependencies__([
-    __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$prisma$2b$adapter$2d$pg$40$7$2e$10$2e$1$2f$node_modules$2f40$prisma$2f$adapter$2d$pg$2f$dist$2f$index$2e$mjs__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__
+    __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$prisma$2b$adapter$2d$pg$40$7$2e$10$2e$1$2f$node_modules$2f40$prisma$2f$adapter$2d$pg$2f$dist$2f$index$2e$mjs__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__,
+    __TURBOPACK__imported__module__$5b$externals$5d2f$pg__$5b$external$5d$__$28$pg$2c$__esm_import$2c$__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$pg$40$8$2e$23$2e$1$2f$node_modules$2f$pg$29$__
 ]);
-[__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$prisma$2b$adapter$2d$pg$40$7$2e$10$2e$1$2f$node_modules$2f40$prisma$2f$adapter$2d$pg$2f$dist$2f$index$2e$mjs__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__] = __turbopack_async_dependencies__.then ? (await __turbopack_async_dependencies__)() : __turbopack_async_dependencies__;
+[__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$prisma$2b$adapter$2d$pg$40$7$2e$10$2e$1$2f$node_modules$2f40$prisma$2f$adapter$2d$pg$2f$dist$2f$index$2e$mjs__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__, __TURBOPACK__imported__module__$5b$externals$5d2f$pg__$5b$external$5d$__$28$pg$2c$__esm_import$2c$__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$pg$40$8$2e$23$2e$1$2f$node_modules$2f$pg$29$__] = __turbopack_async_dependencies__.then ? (await __turbopack_async_dependencies__)() : __turbopack_async_dependencies__;
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+;
 ;
 ;
 ;
 const globalForPrisma = globalThis;
 const createPrismaClient = ()=>{
-    const connectionString = process.env.DATABASE_URL;
-    const adapter = new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$prisma$2b$adapter$2d$pg$40$7$2e$10$2e$1$2f$node_modules$2f40$prisma$2f$adapter$2d$pg$2f$dist$2f$index$2e$mjs__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["PrismaPg"]({
-        connectionString
+    const rawConnectionString = process.env.DATABASE_URL;
+    // Cloud databases (DigitalOcean, Supabase, Neon) use custom/self-signed SSL certificates.
+    // Note: pg-connection-string parses `sslmode=require` as verify-full and strips rejectUnauthorized: false.
+    // We strip sslmode from the pool connection string so pg uses ssl: { rejectUnauthorized: false }.
+    const requiresSsl = rawConnectionString?.includes("sslmode=require") || rawConnectionString?.includes("ondigitalocean.com") || rawConnectionString?.includes("sslmode=");
+    let cleanConnectionString = rawConnectionString;
+    if (requiresSsl && cleanConnectionString) {
+        try {
+            const url = new URL(cleanConnectionString);
+            url.searchParams.delete("sslmode");
+            url.searchParams.delete("sslaccept");
+            cleanConnectionString = url.toString();
+        } catch  {
+            cleanConnectionString = cleanConnectionString.replace(/([?&])sslmode=[^&]+(&|$)/, "$1").replace(/([?&])sslaccept=[^&]+(&|$)/, "$1").replace(/[?&]$/, "");
+        }
+    }
+    const pool = globalForPrisma.pgPool ?? new __TURBOPACK__imported__module__$5b$externals$5d2f$pg__$5b$external$5d$__$28$pg$2c$__esm_import$2c$__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$pg$40$8$2e$23$2e$1$2f$node_modules$2f$pg$29$__["Pool"]({
+        connectionString: cleanConnectionString,
+        ssl: requiresSsl ? {
+            rejectUnauthorized: false
+        } : undefined
     });
+    if ("TURBOPACK compile-time truthy", 1) {
+        globalForPrisma.pgPool = pool;
+    }
+    const adapter = new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$prisma$2b$adapter$2d$pg$40$7$2e$10$2e$1$2f$node_modules$2f40$prisma$2f$adapter$2d$pg$2f$dist$2f$index$2e$mjs__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["PrismaPg"](pool);
     return new __TURBOPACK__imported__module__$5b$externals$5d2f40$prisma$2f$client__$5b$external$5d$__$2840$prisma$2f$client$2c$__cjs$2c$__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$prisma$2b$client$40$7$2e$10$2e$1_prisma$40$7$2e$10$2e$1_$40$types$2b$node$40$20$2e$19$2e$43_$40$types$2b$react$2d$dom$40$19$2e$3$2e$0_$40$types_009596b32b6df6855faa5522417f426e$2f$node_modules$2f40$prisma$2f$client$29$__["PrismaClient"]({
         adapter
     });
