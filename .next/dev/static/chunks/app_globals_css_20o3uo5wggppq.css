@@ -2876,10 +2876,6 @@
       border-color: #ebe2d6;
     }
 
-    .hover\:bg-\[\#4A5836\]:hover {
-      background-color: #4a5836;
-    }
-
     .hover\:bg-\[\#8B9B6D\]\/10:hover {
       background-color: #8b9b6d1a;
       background-color: lab(61.8001% -12.0356 22.2106 / .1);
