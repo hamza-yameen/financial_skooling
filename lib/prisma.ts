@@ -41,6 +41,10 @@ const createPrismaClient = () => {
     new Pool({
       connectionString: cleanConnectionString,
       ssl: requiresSsl ? { rejectUnauthorized: false } : undefined,
+      max: 2, // Strictly throttled to prevent hitting DigitalOcean's concurrent connection cap
+      idleTimeoutMillis: 3000, // Reclaim idle connection slots quickly (3 seconds)
+      connectionTimeoutMillis: 10000,
+      allowExitOnIdle: true,
     });
 
   if (process.env.NODE_ENV !== "production") {
@@ -48,13 +52,15 @@ const createPrismaClient = () => {
   }
 
   const adapter = new PrismaPg(pool);
-  return new PrismaClient({ adapter });
+  const client = new PrismaClient({ adapter });
+
+  if (process.env.NODE_ENV !== "production") {
+    globalForPrisma.prisma = client;
+  }
+
+  return client;
 };
 
 export const prisma = globalForPrisma.prisma ?? createPrismaClient();
-
-if (process.env.NODE_ENV !== "production") {
-  globalForPrisma.prisma = prisma;
-}
 
 export default prisma;

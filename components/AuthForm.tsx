@@ -8,9 +8,9 @@ import {
   Mail,
   User,
   ArrowRight,
-  TrendingUp,
   Loader2,
 } from "lucide-react";
+import BrandIcon from "./BrandIcon";
 import { toast } from "sonner";
 
 export default function AuthForm({ mode = "login" }: { mode?: "login" | "register" }) {
@@ -58,10 +58,23 @@ export default function AuthForm({ mode = "login" }: { mode?: "login" | "registe
         { id: toastId }
       );
 
+      const callbackUrl =
+        typeof window !== "undefined"
+          ? new URLSearchParams(window.location.search).get("callbackUrl")
+          : null;
+
       if (data.user.role === "ADMIN") {
-        router.push("/admin");
+        if (callbackUrl && callbackUrl.startsWith("/admin")) {
+          router.push(callbackUrl);
+        } else {
+          router.push("/admin");
+        }
       } else {
-        router.push("/student/dashboard");
+        if (callbackUrl && callbackUrl.startsWith("/student")) {
+          router.push(callbackUrl);
+        } else {
+          router.push("/student/dashboard");
+        }
       }
       router.refresh();
     } catch (err: any) {
@@ -76,11 +89,7 @@ export default function AuthForm({ mode = "login" }: { mode?: "login" | "registe
     <div className="w-full max-w-md mx-auto rounded-3xl bg-white/95 border border-[#EBE2D6] p-7 sm:p-9 backdrop-blur-2xl shadow-xl shadow-[#5C6E42]/10 space-y-6">
       {/* Brand Header */}
       <div className="text-center space-y-2">
-        <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-[#3D4C2B] via-[#5C6E42] to-[#8B9B6D] p-[2px] mx-auto shadow-md shadow-[#5C6E42]/20">
-          <div className="w-full h-full bg-white rounded-[14px] flex items-center justify-center">
-            <TrendingUp className="w-6 h-6 text-[#5C6E42]" />
-          </div>
-        </div>
+        <BrandIcon className="w-12 h-12 mx-auto shadow-md shadow-[#5C6E42]/20 rounded-2xl" />
         <h2 className="text-2xl font-black tracking-tight text-[#1C2417]">
           {currentMode === "login" ? "Welcome Back" : "Create Operator Account"}
         </h2>

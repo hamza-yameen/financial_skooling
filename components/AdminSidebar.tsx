@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
-  TrendingUp,
   LayoutDashboard,
   BookOpen,
   FolderTree,
@@ -13,10 +12,8 @@ import {
   Activity,
   LogOut,
   ShieldAlert,
-  ArrowLeft,
   Menu,
   X,
-  UserCheck,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -155,29 +152,6 @@ export default function AdminSidebar({ user }: { user: AdminUserData }) {
                 </Link>
               );
             })}
-          </div>
-
-          {/* Shortcuts */}
-          <div className="space-y-1 pt-2 border-t border-[#EBE2D6]">
-            <span className="text-[10px] font-mono uppercase tracking-wider text-[#4A5836] font-semibold px-3 block mb-2">
-              QUICK SWITCH
-            </span>
-            <Link
-              href="/student/dashboard"
-              onClick={() => setMobileOpen(false)}
-              className="flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-[#F7F2EB] transition-colors"
-            >
-              <UserCheck className="w-4 h-4 text-[#5C6E42]" />
-              <span>Student Dashboard</span>
-            </Link>
-            <Link
-              href="/"
-              onClick={() => setMobileOpen(false)}
-              className="flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-[#F7F2EB] transition-colors"
-            >
-              <ArrowLeft className="w-4 h-4 text-slate-400" />
-              <span>Public Landing Page</span>
-            </Link>
           </div>
         </div>
 

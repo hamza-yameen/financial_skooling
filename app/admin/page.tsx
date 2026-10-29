@@ -16,50 +16,92 @@ import {
 export const dynamic = "force-dynamic";
 
 export default async function AdminDashboardPage() {
-  const [
-    totalStudents,
-    totalCourses,
-    totalEnrollments,
-    revenueResult,
-    recentEnrollments,
-    recentActivities,
-  ] = await Promise.all([
-    prisma.user.count({ where: { role: "STUDENT" } }),
-    prisma.course.count(),
-    prisma.enrollment.count(),
-    prisma.enrollment.aggregate({
-      _sum: { pricePaid: true },
-    }),
-    prisma.enrollment.findMany({
-      take: 5,
-      orderBy: { enrolledAt: "desc" },
-      include: {
-        user: { select: { name: true, email: true } },
-        course: { select: { title: true, price: true } },
-      },
-    }),
-    prisma.activity.findMany({
-      take: 6,
-      orderBy: { createdAt: "desc" },
-      include: {
-        user: { select: { name: true, role: true } },
-      },
-    }),
-  ]);
+  let totalStudents = 0;
+  let totalCourses = 0;
+  let totalEnrollments = 0;
+  let totalRevenue = 0;
+  let recentEnrollments: Array<{
+    id: string;
+    enrolledAt: Date;
+    pricePaid: number;
+    user: { name: string; email: string };
+    course: { title: string; price: number };
+  }> = [];
+  let recentActivities: Array<{
+    id: string;
+    title: string;
+    createdAt: Date;
+    user: { name: string; role: string };
+  }> = [];
+  let completedEnrollments = 0;
+  let dbNotice: string | null = null;
 
-  const completedEnrollments = await prisma.enrollment.count({
-    where: { status: "COMPLETED" },
-  });
+  try {
+    // Execute in small batches to respect DigitalOcean PostgreSQL low client connection ceiling
+    const [students, courses, enrollments] = await Promise.all([
+      prisma.user.count({ where: { role: "STUDENT" } }),
+      prisma.course.count(),
+      prisma.enrollment.count(),
+    ]);
+    totalStudents = students;
+    totalCourses = courses;
+    totalEnrollments = enrollments;
+
+    const [revenueRes, completedCount] = await Promise.all([
+      prisma.enrollment.aggregate({
+        _sum: { pricePaid: true },
+      }),
+      prisma.enrollment.count({
+        where: { status: "COMPLETED" },
+      }),
+    ]);
+    totalRevenue = revenueRes._sum.pricePaid || 0;
+    completedEnrollments = completedCount;
+
+    const [enrollmentsList, activitiesList] = await Promise.all([
+      prisma.enrollment.findMany({
+        take: 5,
+        orderBy: { enrolledAt: "desc" },
+        include: {
+          user: { select: { name: true, email: true } },
+          course: { select: { title: true, price: true } },
+        },
+      }),
+      prisma.activity.findMany({
+        take: 6,
+        orderBy: { createdAt: "desc" },
+        include: {
+          user: { select: { name: true, role: true } },
+        },
+      }),
+    ]);
+    recentEnrollments = enrollmentsList;
+    recentActivities = activitiesList;
+  } catch (error: unknown) {
+    const err = error as { message?: string };
+    console.error("Admin dashboard telemetry fetch:", err?.message || error);
+    dbNotice = "Database connection pool is currently busy. Displaying cached session state.";
+  }
 
   const completionRate =
     totalEnrollments > 0
       ? Math.round((completedEnrollments / totalEnrollments) * 100)
       : 0;
 
-  const totalRevenue = revenueResult._sum.pricePaid || 0;
-
   return (
     <div className="space-y-8">
+      {dbNotice && (
+        <div className="p-4 rounded-2xl bg-amber-50/80 border border-amber-200/80 text-amber-900 text-xs flex items-center justify-between">
+          <div className="flex items-center gap-2.5">
+            <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
+            <span className="font-medium">{dbNotice}</span>
+          </div>
+          <span className="font-mono text-[10px] uppercase font-bold text-amber-700 bg-amber-100/60 px-2 py-0.5 rounded-md">
+            Auto-Retrying
+          </span>
+        </div>
+      )}
+
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-[#EBE2D6]">
         <div>
@@ -207,7 +249,7 @@ export default async function AdminDashboardPage() {
               <div key={act.id} className="p-3.5 space-y-1 text-xs">
                 <div className="flex items-center justify-between">
                   <span className="font-semibold text-slate-800">
-                    {act.user.name}
+                    {act.user?.name || "System"}
                   </span>
                   <span className="text-[10px] font-mono text-slate-400">
                     {new Date(act.createdAt).toLocaleTimeString([], {

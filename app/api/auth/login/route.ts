@@ -33,7 +33,7 @@ export async function POST(request: Request) {
       );
     }
 
-    await setSession(user.id);
+    await setSession(user);
 
     return NextResponse.json({
       success: true,
@@ -43,6 +43,7 @@ export async function POST(request: Request) {
         name: user.name,
         role: user.role,
       },
+      redirectTo: user.role === "ADMIN" ? "/admin" : "/student/dashboard",
     });
   } catch (error) {
     console.error("Login error:", error);

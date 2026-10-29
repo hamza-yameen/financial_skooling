@@ -55,7 +55,7 @@ export async function POST(request: Request) {
       },
     });
 
-    await setSession(newUser.id);
+    await setSession(newUser);
 
     return NextResponse.json({
       success: true,
@@ -65,6 +65,7 @@ export async function POST(request: Request) {
         email: newUser.email,
         role: newUser.role,
       },
+      redirectTo: newUser.role === "ADMIN" ? "/admin" : "/student/dashboard",
     });
   } catch (error) {
     console.error("Register error:", error);

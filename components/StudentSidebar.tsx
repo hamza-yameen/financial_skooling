@@ -17,6 +17,7 @@ import {
   ArrowUpRight,
   ShieldAlert,
 } from "lucide-react";
+import BrandIcon from "./BrandIcon";
 import { toast } from "sonner";
 
 interface SessionUserData {
@@ -63,9 +64,7 @@ export default function StudentSidebar({ user }: { user: SessionUserData }) {
       {/* Mobile Sticky Header */}
       <div className="md:hidden flex items-center justify-between p-4 bg-white border-b border-[#EBE2D6] shadow-sm sticky top-0 z-40">
         <Link href="/student/dashboard" className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-[#3D4C2B] via-[#5C6E42] to-[#76885A] flex items-center justify-center text-white">
-            <TrendingUp className="w-4 h-4" />
-          </div>
+          <BrandIcon className="w-8 h-8 rounded-lg shadow-xs" />
           <span className="font-bold text-[#1C2417] text-sm">
             Financial <span className="text-[#5C6E42]">Skool</span>
           </span>
@@ -89,11 +88,7 @@ export default function StudentSidebar({ user }: { user: SessionUserData }) {
           {/* Brand Logo */}
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center gap-3 group">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#3D4C2B] via-[#5C6E42] to-[#8B9B6D] p-[1.5px] shadow-sm">
-                <div className="w-full h-full bg-white rounded-[10px] flex items-center justify-center">
-                  <TrendingUp className="w-4 h-4 text-[#5C6E42]" />
-                </div>
-              </div>
+              <BrandIcon className="w-9 h-9 rounded-xl shadow-xs" />
               <div>
                 <span className="text-base font-bold text-[#1C2417] tracking-tight group-hover:text-[#5C6E42] transition-colors">
                   Financial <span className="text-[#5C6E42]">Skool</span>

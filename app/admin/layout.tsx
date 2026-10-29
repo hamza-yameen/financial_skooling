@@ -14,8 +14,12 @@ export default async function AdminLayout({
 }) {
   const user = await getSessionUser();
 
-  if (!user || user.role !== "ADMIN") {
+  if (!user) {
     redirect("/login?callbackUrl=/admin");
+  }
+
+  if (user.role !== "ADMIN") {
+    redirect("/student/dashboard");
   }
 
   return (

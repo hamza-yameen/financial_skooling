@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import BrandIcon from "./BrandIcon";
 import {
   MapPin,
   Phone,
@@ -17,11 +18,7 @@ export default function Footer() {
           {/* Brand Column */}
           <div className="lg:col-span-5 space-y-4">
             <Link href="/" className="flex items-center gap-3 group">
-              <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-[#5C6E42] via-[#8B9B6D] to-[#BAC8A1] p-[2px] shadow-sm group-hover:scale-105 transition-all">
-                <div className="w-full h-full bg-white rounded-[14px] flex items-center justify-center">
-                  <span className="font-black text-xs text-[#5C6E42] font-mono">fs</span>
-                </div>
-              </div>
+              <BrandIcon className="w-10 h-10 shadow-sm group-hover:scale-105 transition-all duration-300 rounded-2xl" />
               <div>
                 <h3 className="text-xl font-black tracking-tight text-[#1C2417]">
                   Financial <span className="text-gradient-primary">Skool</span>

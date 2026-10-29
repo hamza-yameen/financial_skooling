@@ -19,7 +19,7 @@ export async function POST(request: Request) {
       );
     }
 
-    await setSession(user.id);
+    await setSession(user);
 
     return NextResponse.json({
       success: true,
