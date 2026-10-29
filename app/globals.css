@@ -1,0 +1,199 @@
+@import "tailwindcss";
+
+:root {
+  /* Exact Color Swatch Palette from User Image */
+  --palette-sage: #8B9B6D;       /* Band 1: Olive / Sage Green */
+  --palette-cream: #F7F2EB;      /* Band 2: Warm Off-White / Alabaster */
+  --palette-sand: #EBE2D6;       /* Band 3: Warm Oat / Sand */
+  --palette-fog: #EEEEEE;        /* Band 4: Pale Fog / Mineral Off-White */
+  
+  /* Deep Complementary Tones */
+  --palette-forest-dark: #1C2417;
+  --palette-olive-deep: #4A5836;
+  --palette-sage-mid: #6E8050;
+  --palette-sage-light: #A5B786;
+  --palette-sage-soft: #D3DEC0;
+  
+  --background: #F7F2EB;
+  --foreground: #1C2417;
+  --card: #FFFFFF;
+  --card-border: #EBE2D6;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #F7F2EB;
+  color: #1C2417;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* Custom modern scrollbars in Sand & Sage */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F7F2EB;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #D8CEBE;
+  border-radius: 9999px;
+  border: 2px solid #F7F2EB;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #8B9B6D;
+}
+
+/* Glassmorphism surfaces for the Warm Sage & Cream Theme */
+.glass-panel {
+  background: rgba(247, 242, 235, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(235, 226, 214, 0.95);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid #EBE2D6;
+  box-shadow: 0 10px 25px -5px rgba(139, 155, 109, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-card:hover {
+  border-color: #8B9B6D;
+  transform: translateY(-3px);
+  box-shadow: 0 20px 35px -10px rgba(139, 155, 109, 0.2), 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+}
+
+/* Glowing Sage & Sand Accents */
+.glow-sage {
+  box-shadow: 0 10px 35px -8px rgba(139, 155, 109, 0.45);
+}
+
+.glow-sand {
+  box-shadow: 0 10px 35px -8px rgba(235, 226, 214, 0.7);
+}
+
+.glow-subtle {
+  box-shadow: 0 4px 20px -2px rgba(139, 155, 109, 0.15);
+}
+
+/* Breathtaking Palette Gradients */
+.text-gradient-primary {
+  background: linear-gradient(135deg, #384524 0%, #5C6E42 35%, #8B9B6D 70%, #A5B786 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-sage {
+  background: linear-gradient(135deg, #2D391C 0%, #6E8050 50%, #A5B786 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-sunset {
+  background: linear-gradient(135deg, #5C6E42 0%, #8B9B6D 40%, #CBB688 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-cyan {
+  background: linear-gradient(135deg, #384524 0%, #6E8050 50%, #8B9B6D 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.bg-gradient-primary {
+  background: linear-gradient(135deg, #4A5836 0%, #6E8050 50%, #8B9B6D 100%);
+}
+
+.bg-gradient-sage {
+  background: linear-gradient(135deg, #5C6E42 0%, #8B9B6D 60%, #76885A 100%);
+}
+
+.bg-gradient-sand {
+  background: linear-gradient(135deg, #F7F2EB 0%, #EBE2D6 100%);
+}
+
+/* Shimmer & Mesh Animations */
+@keyframes shimmer-gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes mesh-float {
+  0% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  33% {
+    transform: translate(25px, -35px) scale(1.08);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.95);
+  }
+  100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+}
+
+@keyframes float-slow {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes float-delayed {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(8px);
+  }
+}
+
+@keyframes pulse-subtle {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.88;
+    transform: scale(1.02);
+  }
+}
+
+.animate-mesh-slow {
+  animation: mesh-float 22s ease-in-out infinite;
+}
+
+.animate-float {
+  animation: float-slow 4s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float-delayed 5s ease-in-out infinite 1s;
+}
+
+.animate-pulse-subtle {
+  animation: pulse-subtle 3s ease-in-out infinite;
+}

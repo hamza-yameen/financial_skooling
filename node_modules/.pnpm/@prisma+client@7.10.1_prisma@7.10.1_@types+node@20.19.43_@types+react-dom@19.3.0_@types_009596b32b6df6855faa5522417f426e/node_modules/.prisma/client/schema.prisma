@@ -1,0 +1,160 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  STUDENT
+  ADMIN
+}
+
+enum Level {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+  ALL_LEVELS
+}
+
+enum EnrollmentStatus {
+  ACTIVE
+  COMPLETED
+  REVOKED
+}
+
+model User {
+  id             String           @id @default(cuid())
+  email          String           @unique
+  password       String
+  name           String
+  role           Role             @default(STUDENT)
+  avatar         String?
+  bio            String?
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  enrollments    Enrollment[]
+  lessonProgress LessonProgress[]
+  activities     Activity[]
+  reviews        Review[]
+}
+
+model Category {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  slug        String   @unique
+  description String?
+  icon        String?
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  courses     Course[]
+}
+
+model Course {
+  id               String       @id @default(cuid())
+  title            String
+  slug             String       @unique
+  tagline          String
+  summary          String
+  description      String
+  price            Float
+  originalPrice    Float?
+  currency         String       @default("EUR")
+  level            Level        @default(BEGINNER)
+  duration         String
+  format           String       @default("PDF-First + Interactive Lab")
+  published        Boolean      @default(true)
+  featured         Boolean      @default(false)
+  order            Int          @default(0)
+  coverImage       String?
+  badge            String?
+  highlights       String[]
+  whatYouWillLearn String[]
+  requirements     String[]
+  categoryId       String
+  category         Category     @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  lessons          Lesson[]
+  enrollments      Enrollment[]
+  reviews          Review[]
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+}
+
+model Lesson {
+  id             String           @id @default(cuid())
+  courseId       String
+  course         Course           @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  title          String
+  slug           String
+  moduleTitle    String           @default("Module 1")
+  order          Int              @default(0)
+  duration       String
+  summary        String
+  content        String
+  pdfUrl         String?
+  isFreePreview  Boolean          @default(false)
+  lessonProgress LessonProgress[]
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+
+  @@unique([courseId, slug])
+}
+
+model Enrollment {
+  id             String           @id @default(cuid())
+  userId         String
+  user           User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  courseId       String
+  course         Course           @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  pricePaid      Float
+  currency       String           @default("EUR")
+  paymentMethod  String           @default("MOCK_CARD")
+  billingDetails String?
+  status         EnrollmentStatus @default(ACTIVE)
+  enrolledAt     DateTime         @default(now())
+  completedAt    DateTime?
+
+  @@unique([userId, courseId])
+}
+
+model LessonProgress {
+  id           String    @id @default(cuid())
+  userId       String
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lessonId     String
+  lesson       Lesson    @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  completed    Boolean   @default(false)
+  completedAt  DateTime?
+  lastViewedAt DateTime  @default(now())
+
+  @@unique([userId, lessonId])
+}
+
+model Activity {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type        String
+  title       String
+  description String?
+  metadata    String?
+  createdAt   DateTime @default(now())
+}
+
+model Review {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  courseId    String
+  course      Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  rating      Int      @default(5)
+  comment     String
+  studentName String
+  studentRole String?
+  createdAt   DateTime @default(now())
+}
