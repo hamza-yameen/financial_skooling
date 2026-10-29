@@ -1,36 +1,133 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Financial Skool
+
+A practical, self-paced financial education platform featuring PDF field manuals, quantitative risk simulators, and dedicated student and administrator management dashboards.
+
+---
+
+## Tech Stack
+
+- **Framework:** Next.js 16 (App Router, Turbopack) & React 19
+- **Database & ORM:** PostgreSQL & Prisma ORM v7 (with `@prisma/adapter-pg`)
+- **Styling:** Tailwind CSS v4
+- **Process Manager:** PM2
+- **Language:** TypeScript 5
+
+---
 
 ## Getting Started
 
-First, run the development server:
+### 1. Install Dependencies
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
 ```
 
-Open [http://localhost:3055](http://localhost:3055) with your browser to see the result.
+### 2. Configure Environment Variables
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Create or update your `.env` file based on `.env.example`:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```env
+DATABASE_URL="postgresql://user:password@localhost:5432/f_skool_db"
+PORT=3055
+```
 
-## Learn More
+### 3. Database Migrations & Seeding
 
-To learn more about Next.js, take a look at the following resources:
+Run migrations to set up database tables:
+```bash
+pnpm db:migrate
+```
+*(Or push schema directly: `pnpm db:push`)*
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Seed initial categories, courses, lessons, and demo accounts:
+```bash
+pnpm db:seed
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+**Run both in one command:**
+```bash
+pnpm db:migrate && pnpm db:seed
+```
 
-## Deploy on Vercel
+*(Optional)* Open Prisma Studio to browse and inspect database records in your browser:
+```bash
+pnpm db:studio
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Running the Application
+
+### Development Server
+
+Launches the app on **http://localhost:3055** with hot-reloading:
+
+```bash
+pnpm dev
+```
+
+### Production Build
+
+```bash
+pnpm build
+pnpm start
+```
+
+### Running with PM2 (Background Daemon)
+
+If PM2 is not installed on your system:
+```bash
+npm install -g pm2
+```
+
+Build and launch the application under PM2 on port 3055:
+```bash
+pnpm build
+pnpm pm2:start
+```
+
+**PM2 Management Commands:**
+
+```bash
+pnpm pm2:status    # Check running process status
+pnpm pm2:logs      # Stream real-time logs
+pnpm pm2:restart   # Restart the application
+pnpm pm2:stop      # Stop the process
+```
+
+To enable PM2 auto-restart on machine boot:
+```bash
+pm2 startup
+pm2 save
+```
+
+---
+
+## Default Seeded Accounts
+
+After running `pnpm db:seed`, you can log in with:
+
+| Role | Email | Password | Access Route |
+| :--- | :--- | :--- | :--- |
+| **Administrator** | `admin@finskool.com` | `admin123` | `/admin` |
+| **Student** | `student@finskool.com` | `student123` | `/student/dashboard` |
+
+---
+
+## All Available Scripts
+
+| Script | Description |
+| :--- | :--- |
+| `pnpm dev` | Start development server on port 3055 |
+| `pnpm build` | Create optimized production build |
+| `pnpm start` | Start production server on port 3055 |
+| `pnpm db:migrate` | Run and apply Prisma migrations |
+| `pnpm db:push` | Push schema directly to database |
+| `pnpm db:seed` | Seed database with initial courses and users |
+| `pnpm db:studio` | Open Prisma Studio GUI |
+| `pnpm pm2:start` | Start app under PM2 on port 3055 |
+| `pnpm pm2:stop` | Stop PM2 process |
+| `pnpm pm2:restart` | Restart PM2 process |
+| `pnpm pm2:logs` | View real-time PM2 logs |
+| `pnpm pm2:status` | View PM2 status table |
+| `pnpm lint` | Run ESLint code checks |
