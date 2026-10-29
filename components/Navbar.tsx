@@ -4,21 +4,18 @@ import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
-  TrendingUp,
   ChevronDown,
   ShoppingBag,
   Menu,
   X,
   Check,
   ChevronRight,
-  User,
   ShieldAlert,
   LayoutDashboard,
   BookOpen,
   Cpu,
   Mail,
   HelpCircle,
-  Zap,
 } from "lucide-react";
 import BrandIcon from "./BrandIcon";
 import { useCurrencyCart, Currency } from "./CurrencyCartContext";
@@ -120,18 +117,6 @@ export default function Navbar() {
 
           {/* Right Controls matching the exact screenshot layout */}
           <div className="flex items-center gap-2.5 sm:gap-3.5">
-            {/* Logged-in User Dashboard Access (No Sign In button shown when logged out) */}
-            {user && (
-              <Link
-                href={user.role === "ADMIN" ? "/admin" : "/student/dashboard"}
-                className="hidden sm:flex items-center gap-2 px-3 sm:px-3.5 py-2 rounded-full bg-white hover:bg-[#F7F2EB] border border-[#EBE2D6] text-xs font-semibold text-[#1C2417] shadow-xs hover:border-[#8B9B6D]/50 transition-all cursor-pointer"
-                title="Go to Dashboard"
-              >
-                <User className="w-3.5 h-3.5 text-[#5C6E42]" />
-                <span className="max-w-[100px] truncate">{user.name.split(" ")[0]}</span>
-              </Link>
-            )}
-
             {/* 1. Language & Currency Selector Pill */}
             <div className="relative" ref={currencyDropdownRef}>
               <button
@@ -265,65 +250,22 @@ export default function Navbar() {
                       </button>
                     </div>
 
-                    {/* 2x2 grid of actions */}
-                    <div className="grid grid-cols-2 gap-2">
-                      <Link
-                        href={user.role === "ADMIN" ? "/admin" : "/student/dashboard"}
-                        onClick={() => setMenuDrawerOpen(false)}
-                        className="p-2.5 rounded-xl bg-[#F7F2EB] hover:bg-[#EBE2D6] border border-[#EBE2D6] text-center text-xs font-bold text-[#1C2417] transition-colors"
-                      >
-                        Dashboard
-                      </Link>
-                      <Link
-                        href="/student/courses"
-                        onClick={() => setMenuDrawerOpen(false)}
-                        className="p-2.5 rounded-xl bg-[#F7F2EB] hover:bg-[#EBE2D6] border border-[#EBE2D6] text-center text-xs font-bold text-[#1C2417] transition-colors"
-                      >
-                        My Programs
-                      </Link>
-                      <Link
-                        href="/simulator"
-                        onClick={() => setMenuDrawerOpen(false)}
-                        className="p-2.5 rounded-xl bg-[#F7F2EB] hover:bg-[#EBE2D6] border border-[#EBE2D6] text-center text-xs font-bold text-[#1C2417] transition-colors"
-                      >
-                        Simulator
-                      </Link>
-                      <Link
-                        href="/student/profile"
-                        onClick={() => setMenuDrawerOpen(false)}
-                        className="p-2.5 rounded-xl bg-[#F7F2EB] hover:bg-[#EBE2D6] border border-[#EBE2D6] text-center text-xs font-bold text-[#1C2417] transition-colors"
-                      >
-                        Profile
-                      </Link>
-                    </div>
-
-                    {/* Admin Banner button if admin */}
-                    {user.role === "ADMIN" && (
-                      <Link
-                        href="/admin"
-                        onClick={() => setMenuDrawerOpen(false)}
-                        className="w-full py-2.5 rounded-xl bg-gradient-to-r from-[#8B9B6D]/15 to-[#BAC8A1]/20 border border-[#8B9B6D]/40 text-[#4A5836] font-bold text-xs flex items-center justify-center gap-1.5 hover:bg-[#8B9B6D]/25 transition-colors shadow-xs"
-                      >
-                        <Zap className="w-3.5 h-3.5 text-[#5C6E42]" />
-                        Admin Control Panel
-                      </Link>
-                    )}
+                    {/* Single Direct Dashboard Button */}
+                    <Link
+                      href={user.role === "ADMIN" ? "/admin" : "/student/dashboard"}
+                      onClick={() => setMenuDrawerOpen(false)}
+                      className="w-full py-3 px-4 rounded-2xl bg-gradient-to-r from-[#5C6E42] via-[#6E8050] to-[#8B9B6D] hover:opacity-95 text-white font-bold text-xs flex items-center justify-between shadow-md shadow-[#8B9B6D]/25 hover:scale-[1.01] active:scale-98 transition-all cursor-pointer"
+                    >
+                      <div className="flex items-center gap-2">
+                        <LayoutDashboard className="w-4 h-4" />
+                        <span>Go to Dashboard</span>
+                      </div>
+                      <ChevronRight className="w-4 h-4 opacity-80" />
+                    </Link>
                   </div>
                 ) : (
-                  <div className="p-5 rounded-3xl bg-white border border-[#EBE2D6] shadow-xs space-y-3.5">
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <span className="w-2 h-2 rounded-full bg-[#8B9B6D] animate-pulse" />
-                        <h4 className="text-xs font-bold uppercase tracking-wider text-[#1C2417]">
-                          Member Portal
-                        </h4>
-                      </div>
-                      <p className="text-xs text-[#636B58] mt-1 font-medium leading-relaxed">
-                        Access your enrolled playbooks, study progress, and financial simulator tools.
-                      </p>
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-2.5 pt-1">
+                  <div className="p-4 rounded-3xl bg-white border border-[#EBE2D6] shadow-xs">
+                    <div className="grid grid-cols-2 gap-2.5">
                       <Link
                         href="/login"
                         onClick={() => setMenuDrawerOpen(false)}
@@ -336,7 +278,7 @@ export default function Navbar() {
                         onClick={() => setMenuDrawerOpen(false)}
                         className="py-2.5 px-3 rounded-xl bg-gradient-to-r from-[#5C6E42] via-[#6E8050] to-[#8B9B6D] hover:opacity-95 text-center text-xs font-bold text-white shadow-md shadow-[#8B9B6D]/25 hover:scale-[1.02] active:scale-95 transition-all cursor-pointer"
                       >
-                        Create Account
+                        Register
                       </Link>
                     </div>
                   </div>
@@ -367,44 +309,6 @@ export default function Navbar() {
                         <ChevronRight className="w-4 h-4 text-[#7E8773] group-hover:text-[#5C6E42] group-hover:translate-x-1 transition-all" />
                       </Link>
                     ))}
-                  </div>
-                </div>
-
-                {/* Section: QUICK ACCESS */}
-                <div className="space-y-3">
-                  <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-[#7E8773] block px-1">
-                    QUICK ACCESS
-                  </span>
-
-                  <div className="grid grid-cols-2 gap-2.5">
-                    <Link
-                      href="/student/courses"
-                      onClick={() => setMenuDrawerOpen(false)}
-                      className="p-3 rounded-2xl bg-white hover:bg-[#EBE2D6] border border-[#EBE2D6] text-center text-xs font-bold text-[#1C2417] transition-colors"
-                    >
-                      My Programs
-                    </Link>
-                    <Link
-                      href="/courses"
-                      onClick={() => setMenuDrawerOpen(false)}
-                      className="p-3 rounded-2xl bg-white hover:bg-[#EBE2D6] border border-[#EBE2D6] text-center text-xs font-bold text-[#1C2417] transition-colors"
-                    >
-                      Curriculum
-                    </Link>
-                    <Link
-                      href="/contact"
-                      onClick={() => setMenuDrawerOpen(false)}
-                      className="p-3 rounded-2xl bg-white hover:bg-[#EBE2D6] border border-[#EBE2D6] text-center text-xs font-bold text-[#1C2417] transition-colors"
-                    >
-                      Support & Contact
-                    </Link>
-                    <Link
-                      href="/faq"
-                      onClick={() => setMenuDrawerOpen(false)}
-                      className="p-3 rounded-2xl bg-white hover:bg-[#EBE2D6] border border-[#EBE2D6] text-center text-xs font-bold text-[#1C2417] transition-colors"
-                    >
-                      FAQ & Help
-                    </Link>
                   </div>
                 </div>
               </div>

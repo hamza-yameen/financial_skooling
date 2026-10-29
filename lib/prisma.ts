@@ -41,11 +41,15 @@ const createPrismaClient = () => {
     new Pool({
       connectionString: cleanConnectionString,
       ssl: requiresSsl ? { rejectUnauthorized: false } : undefined,
-      max: 2, // Strictly throttled to prevent hitting DigitalOcean's concurrent connection cap
-      idleTimeoutMillis: 3000, // Reclaim idle connection slots quickly (3 seconds)
+      max: 10, // Generous client pool to prevent queue starvation
+      idleTimeoutMillis: 10000,
       connectionTimeoutMillis: 10000,
-      allowExitOnIdle: true,
     });
+
+  // Critical for node-postgres: prevents uncaught EventEmitter crashes when idle connections close
+  pool.on("error", (err) => {
+    console.warn("PostgreSQL pool client notice (handled):", err?.message || err);
+  });
 
   if (process.env.NODE_ENV !== "production") {
     globalForPrisma.pgPool = pool;

@@ -33,7 +33,7 @@ export async function POST(request: Request) {
       });
 
       if (!existingUser) {
-        const hashedPassword = await bcrypt.hash(password || "student123", 10);
+        const hashedPassword = await bcrypt.hash(password || "FinSkool@2026!", 10);
         existingUser = await prisma.user.create({
           data: {
             email: normalizedEmail,

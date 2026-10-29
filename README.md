@@ -109,8 +109,8 @@ After running `pnpm db:seed`, you can log in with:
 
 | Role | Email | Password | Access Route |
 | :--- | :--- | :--- | :--- |
-| **Administrator** | `admin@finskool.com` | `admin123` | `/admin` |
-| **Student** | `student@finskool.com` | `student123` | `/student/dashboard` |
+| **Administrator** | `admin@finskool.com` | `FinSkool@2026!` | `/admin` |
+| **Student** | `student@finskool.com` | `FinSkool@2026!` | `/student/dashboard` |
 
 ---
 

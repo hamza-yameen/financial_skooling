@@ -79,7 +79,7 @@ export default async function AdminDashboardPage() {
     recentActivities = activitiesList;
   } catch (error: unknown) {
     const err = error as { message?: string };
-    console.error("Admin dashboard telemetry fetch:", err?.message || error);
+    console.warn("Admin dashboard telemetry notice:", err?.message || error);
     dbNotice = "Database connection pool is currently busy. Displaying cached session state.";
   }
 

@@ -107,19 +107,6 @@ export default function AdminSidebar({ user }: { user: AdminUserData }) {
             </button>
           </div>
 
-          {/* Operational Environment Badge */}
-          <div className="p-3 rounded-xl bg-[#8B9B6D]/15 border border-[#8B9B6D]/30 text-xs flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span className="font-semibold text-[#1C2417] font-mono text-[11px]">
-                DB: PostgreSQL Online
-              </span>
-            </div>
-            <span className="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-white text-[#384524] border border-[#8B9B6D]/30 font-bold">
-              PROD
-            </span>
-          </div>
-
           {/* Navigation */}
           <div className="space-y-1">
             <span className="text-[10px] font-mono uppercase tracking-wider text-[#4A5836] font-semibold px-3 block mb-2">
