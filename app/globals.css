@@ -1,23 +1,42 @@
 @import "tailwindcss";
 
 :root {
-  /* Exact Color Swatch Palette from User Image */
-  --palette-sage: #8B9B6D;       /* Band 1: Olive / Sage Green */
-  --palette-cream: #F7F2EB;      /* Band 2: Warm Off-White / Alabaster */
-  --palette-sand: #EBE2D6;       /* Band 3: Warm Oat / Sand */
-  --palette-fog: #EEEEEE;        /* Band 4: Pale Fog / Mineral Off-White */
-  
-  /* Deep Complementary Tones */
-  --palette-forest-dark: #1C2417;
-  --palette-olive-deep: #4A5836;
-  --palette-sage-mid: #6E8050;
-  --palette-sage-light: #A5B786;
-  --palette-sage-soft: #D3DEC0;
-  
-  --background: #F7F2EB;
-  --foreground: #1C2417;
+  /* Increase.com Exact Design System Palette & Tokens */
+  --increase-bg: #EDF1F5;              /* Canonical Increase Canvas Line / Slate Gray */
+  --increase-surface: #FFFFFF;         /* Crisp White Card Surface */
+  --increase-surface-subtle: #F5F8FA;  /* Subtle Card Background */
+  --increase-ink: #1D2A36;             /* Primary Text / High-Contrast Deep Ink Navy */
+  --increase-ink-muted: #334352;       /* Secondary Muted Slate Ink */
+  --increase-ink-subtle: #657482;      /* Tertiary / Caption Ink */
+  --increase-ink-faint: #8995A1;       /* Micro Metadata / Line Label */
+  --increase-line: #EDF1F5;            /* Hairline Border */
+  --increase-line-strong: #D5DEE5;     /* Defined High-Precision Border */
+  --increase-line-dark: #314352;       /* Dark Mode Hairline */
+  --increase-dark: #132030;            /* Deep Banking Midnight Slate */
+  --increase-dark-surface: #1A2B3B;    /* Dark Card Surface */
+  --increase-dark-deep: #0D1726;       /* Deepest Slate */
+
+  /* Increase Signature Accents */
+  --increase-green: #31F2BF;           /* Electric Mint / Terminal Cyan */
+  --increase-green-light: #E3FFF3;     /* Light Mint Pill Background */
+  --increase-green-medium: #87FAD4;    /* Medium Mint */
+  --increase-green-dark: #007554;      /* Deep Mint Text Accent */
+  --increase-blue: #34BCFF;            /* Sky Blue Accent */
+  --increase-yellow: #CDDB00;          /* Yellow Accent */
+  --increase-red: #FF5F33;             /* Coral / Alert Accent */
+
+  /* Compatibility Mapping */
+  --background: #EDF1F5;
+  --foreground: #1D2A36;
   --card: #FFFFFF;
-  --card-border: #EBE2D6;
+  --card-border: #D5DEE5;
+
+  /* Typography Stacks */
+  --font-sans: "TT Interphases Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "Input Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
+  /* Increase Easing Curve */
+  --ease-increase: cubic-bezier(.23, 1, .32, 1);
 }
 
 html {
@@ -25,104 +44,97 @@ html {
 }
 
 body {
-  background-color: #F7F2EB;
-  color: #1C2417;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
   min-height: 100vh;
 }
 
-/* Custom modern scrollbars in Sand & Sage */
+/* Increase Custom Precision Scrollbars */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #F7F2EB;
+  background: #EDF1F5;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #D8CEBE;
+  background: #CDD2D8;
   border-radius: 9999px;
-  border: 2px solid #F7F2EB;
+  border: 2px solid #EDF1F5;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #8B9B6D;
+  background: #8995A1;
 }
 
-/* Glassmorphism surfaces for the Warm Sage & Cream Theme */
+/* Increase Precision Cards & Surfaces */
 .glass-panel {
-  background: rgba(247, 242, 235, 0.88);
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(235, 226, 214, 0.95);
+  border: 1px solid #D5DEE5;
 }
 
 .glass-card {
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid #EBE2D6;
-  box-shadow: 0 10px 25px -5px rgba(139, 155, 109, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  background: #FFFFFF;
+  border: 1px solid #D5DEE5;
+  box-shadow: 0 1px 3px 0 rgba(12, 25, 39, 0.04), 0 1px 2px -1px rgba(12, 25, 39, 0.04);
+  transition: all 0.25s var(--ease-increase);
 }
 
 .glass-card:hover {
-  border-color: #8B9B6D;
-  transform: translateY(-3px);
-  box-shadow: 0 20px 35px -10px rgba(139, 155, 109, 0.2), 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+  border-color: #8995A1;
+  box-shadow: 0 10px 25px -5px rgba(12, 25, 39, 0.08), 0 8px 10px -6px rgba(12, 25, 39, 0.04);
+  transform: translateY(-2px);
 }
 
-/* Glowing Sage & Sand Accents */
-.glow-sage {
-  box-shadow: 0 10px 35px -8px rgba(139, 155, 109, 0.45);
-}
-
-.glow-sand {
-  box-shadow: 0 10px 35px -8px rgba(235, 226, 214, 0.7);
+/* Increase Glow & Focus States */
+.glow-sage,
+.glow-mint {
+  box-shadow: 0 8px 24px -4px rgba(49, 242, 191, 0.35);
 }
 
 .glow-subtle {
-  box-shadow: 0 4px 20px -2px rgba(139, 155, 109, 0.15);
+  box-shadow: 0 4px 16px -2px rgba(12, 25, 39, 0.08);
 }
 
-/* Breathtaking Palette Gradients */
+/* Increase Typography Gradients */
 .text-gradient-primary {
-  background: linear-gradient(135deg, #384524 0%, #5C6E42 35%, #8B9B6D 70%, #A5B786 100%);
+  background: linear-gradient(135deg, #1D2A36 0%, #007554 45%, #10B981 80%, #31F2BF 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-.text-gradient-sage {
-  background: linear-gradient(135deg, #2D391C 0%, #6E8050 50%, #A5B786 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.text-gradient-sunset {
-  background: linear-gradient(135deg, #5C6E42 0%, #8B9B6D 40%, #CBB688 100%);
+.text-gradient-sage,
+.text-gradient-mint {
+  background: linear-gradient(135deg, #132030 0%, #007554 50%, #31F2BF 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .text-gradient-cyan {
-  background: linear-gradient(135deg, #384524 0%, #6E8050 50%, #8B9B6D 100%);
+  background: linear-gradient(135deg, #1D2A36 0%, #0284C7 50%, #34BCFF 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .bg-gradient-primary {
-  background: linear-gradient(135deg, #4A5836 0%, #6E8050 50%, #8B9B6D 100%);
+  background: linear-gradient(135deg, #132030 0%, #1A2B3B 50%, #1D2A36 100%);
 }
 
-.bg-gradient-sage {
-  background: linear-gradient(135deg, #5C6E42 0%, #8B9B6D 60%, #76885A 100%);
+.bg-gradient-sage,
+.bg-gradient-mint {
+  background: linear-gradient(135deg, #053226 0%, #007554 60%, #31F2BF 100%);
 }
 
 .bg-gradient-sand {
-  background: linear-gradient(135deg, #F7F2EB 0%, #EBE2D6 100%);
+  background: linear-gradient(135deg, #FFFFFF 0%, #EDF1F5 100%);
 }
 
 /* Shimmer & Mesh Animations */
@@ -197,3 +209,109 @@ body {
 .animate-pulse-subtle {
   animation: pulse-subtle 3s ease-in-out infinite;
 }
+
+/* Fluid Smoky Aura Animations (Light & Ethereal Sage Palette) */
+@keyframes smoke-morph-1 {
+  0% {
+    transform: translate3d(0px, 0px, 0) rotate(0deg) scale(1);
+    border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
+    opacity: 0.45;
+  }
+  25% {
+    transform: translate3d(60px, -50px, 0) rotate(22deg) scale(1.25);
+    border-radius: 58% 42% 35% 65% / 50% 35% 65% 50%;
+    opacity: 0.62;
+  }
+  50% {
+    transform: translate3d(-40px, 45px, 0) rotate(-16deg) scale(0.95);
+    border-radius: 35% 65% 60% 40% / 35% 55% 45% 65%;
+    opacity: 0.42;
+  }
+  75% {
+    transform: translate3d(70px, 25px, 0) rotate(15deg) scale(1.15);
+    border-radius: 65% 35% 40% 60% / 40% 65% 35% 60%;
+    opacity: 0.58;
+  }
+  100% {
+    transform: translate3d(0px, 0px, 0) rotate(0deg) scale(1);
+    border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
+    opacity: 0.45;
+  }
+}
+
+@keyframes smoke-morph-2 {
+  0% {
+    transform: translate3d(0px, 0px, 0) rotate(0deg) scale(0.95);
+    border-radius: 50% 50% 40% 60% / 60% 40% 60% 40%;
+    opacity: 0.4;
+  }
+  33% {
+    transform: translate3d(-60px, -65px, 0) rotate(-32deg) scale(1.3);
+    border-radius: 30% 70% 60% 40% / 40% 60% 40% 60%;
+    opacity: 0.6;
+  }
+  66% {
+    transform: translate3d(65px, 40px, 0) rotate(26deg) scale(1.05);
+    border-radius: 60% 40% 50% 50% / 55% 35% 65% 45%;
+    opacity: 0.45;
+  }
+  100% {
+    transform: translate3d(0px, 0px, 0) rotate(0deg) scale(0.95);
+    border-radius: 50% 50% 40% 60% / 60% 40% 60% 40%;
+    opacity: 0.4;
+  }
+}
+
+@keyframes smoke-morph-3 {
+  0% {
+    transform: translate3d(0px, 0px, 0) rotate(0deg) scale(1);
+    border-radius: 45% 55% 65% 35% / 40% 60% 40% 60%;
+    opacity: 0.35;
+  }
+  50% {
+    transform: translate3d(75px, -45px, 0) rotate(38deg) scale(1.25);
+    border-radius: 65% 35% 35% 65% / 55% 45% 55% 45%;
+    opacity: 0.55;
+  }
+  100% {
+    transform: translate3d(0px, 0px, 0) rotate(0deg) scale(1);
+    border-radius: 45% 55% 65% 35% / 40% 60% 40% 60%;
+    opacity: 0.35;
+  }
+}
+
+@keyframes smoke-drift-slow {
+  0% {
+    transform: translate3d(0px, 0px, 0) scale(1);
+    opacity: 0.35;
+  }
+  50% {
+    transform: translate3d(45px, -40px, 0) scale(1.18);
+    opacity: 0.52;
+  }
+  100% {
+    transform: translate3d(0px, 0px, 0) scale(1);
+    opacity: 0.35;
+  }
+}
+
+.animate-smoke-1 {
+  animation: smoke-morph-1 10s ease-in-out infinite;
+  will-change: transform, border-radius, opacity;
+}
+
+.animate-smoke-2 {
+  animation: smoke-morph-2 13s ease-in-out infinite;
+  will-change: transform, border-radius, opacity;
+}
+
+.animate-smoke-3 {
+  animation: smoke-morph-3 16s ease-in-out infinite;
+  will-change: transform, border-radius, opacity;
+}
+
+.animate-smoke-drift {
+  animation: smoke-drift-slow 11s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+

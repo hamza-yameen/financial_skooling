@@ -21,19 +21,19 @@ export default function HomeCourseCardFooter({ course }: HomeCourseCardFooterPro
   const { formatPrice, addToCart, isInCart } = useCurrencyCart();
 
   return (
-    <div className="pt-6 mt-6 border-t border-[#EBE2D6] flex items-center justify-between">
+    <div className="pt-5 mt-5 border-t border-[#D5DEE5] flex items-center justify-between">
       <div>
         <div className="flex items-baseline gap-2">
-          <span className="text-2xl font-black text-[#1C2417] tracking-tight">
+          <span className="text-2xl font-black text-[#1D2A36] tracking-tight font-mono">
             {formatPrice(course.price)}
           </span>
           {course.originalPrice && (
-            <span className="text-xs font-mono text-[#7E8773] line-through">
+            <span className="text-xs font-mono text-[#8995A1] line-through">
               {formatPrice(course.originalPrice)}
             </span>
           )}
         </div>
-        <span className="text-[10px] font-mono font-bold text-[#5C6E42] block uppercase tracking-wider">
+        <span className="text-[10px] font-mono font-bold text-[#007554] block uppercase tracking-wider">
           Lifetime • No Subs
         </span>
       </div>
@@ -51,15 +51,15 @@ export default function HomeCourseCardFooter({ course }: HomeCourseCardFooterPro
               coverImage: course.coverImage,
             })
           }
-          className={`p-2 rounded-full border transition-all cursor-pointer ${
+          className={`p-2 rounded-lg border transition-all cursor-pointer ${
             isInCart(course.id)
-              ? "bg-[#8B9B6D]/15 border-[#8B9B6D]/40 text-[#4A5836]"
-              : "bg-white border-[#EBE2D6] text-[#636B58] hover:text-[#5C6E42] hover:border-[#8B9B6D]/50 hover:bg-[#F7F2EB]"
+              ? "bg-[#E3FFF3] border-[#31F2BF]/50 text-[#007554]"
+              : "bg-white border-[#D5DEE5] text-[#657482] hover:text-[#1D2A36] hover:border-[#8995A1] hover:bg-[#F5F8FA]"
           }`}
           title={isInCart(course.id) ? "Already in Cart" : "Add to Cart"}
         >
           {isInCart(course.id) ? (
-            <Check className="w-3.5 h-3.5 text-[#5C6E42]" />
+            <Check className="w-3.5 h-3.5 text-[#007554]" />
           ) : (
             <ShoppingBag className="w-3.5 h-3.5" />
           )}
@@ -67,13 +67,13 @@ export default function HomeCourseCardFooter({ course }: HomeCourseCardFooterPro
 
         <Link
           href={`/courses/${course.slug}`}
-          className="px-3 py-1.5 text-xs font-bold rounded-full bg-[#F7F2EB] hover:bg-[#EBE2D6] text-[#1C2417] border border-[#EBE2D6] transition-colors"
+          className="px-3 py-1.5 text-xs font-bold rounded-lg bg-[#F5F8FA] hover:bg-[#E1E5E9] text-[#1D2A36] border border-[#D5DEE5] transition-colors"
         >
           Syllabus
         </Link>
         <Link
           href={`/checkout/${course.slug}`}
-          className="px-3.5 py-1.5 text-xs font-bold rounded-full bg-gradient-to-r from-[#5C6E42] via-[#6E8050] to-[#8B9B6D] hover:opacity-95 text-white shadow-md shadow-[#8B9B6D]/25 hover:scale-105 active:scale-95 transition-all"
+          className="px-3.5 py-1.5 text-xs font-bold rounded-lg bg-[#1D2A36] hover:bg-[#132030] text-white shadow-xs hover:scale-105 active:scale-95 transition-all border border-[#132030]"
         >
           Enroll
         </Link>

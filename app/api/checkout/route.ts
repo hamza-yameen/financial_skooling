@@ -90,27 +90,100 @@ export async function POST(request: Request) {
     }
 
     // Create enrollment
-    const enrollment = await prisma.enrollment.create({
-      data: {
-        userId: user.id,
-        courseId: course.id,
-        pricePaid: course.price,
-        currency: course.currency,
-        paymentMethod: paymentMethod || "MOCK_CARD",
-        billingDetails: JSON.stringify(billingDetails || {}),
-        status: "ACTIVE",
-      },
-    });
+    const isCreditPayment = paymentMethod === "CREDITS" || paymentMethod === "MOCK_CREDITS";
+    const creditCost = course.creditsCost || 25;
 
-    // Record activity
-    await prisma.activity.create({
-      data: {
-        userId: user.id,
-        type: "ENROLLED",
-        title: `Enrolled in ${course.title}`,
-        description: `Successfully completed mock transaction of €${course.price} via ${paymentMethod || "Mock Card"}.`,
-      },
-    });
+    let enrollment;
+
+    if (isCreditPayment) {
+      // Check current user credit balance from database
+      const dbUser = await prisma.user.findUnique({
+        where: { id: user.id },
+        select: { credits: true },
+      });
+
+      const currentCredits = dbUser?.credits ?? 0;
+      if (currentCredits < creditCost) {
+        return NextResponse.json(
+          {
+            error: `Insufficient credits. You need ${creditCost} credits, but your current balance is ${currentCredits} credits.`,
+            neededCredits: creditCost - currentCredits,
+            currentCredits,
+            requiredCredits: creditCost,
+          },
+          { status: 400 }
+        );
+      }
+
+      // Execute atomic transaction: deduct credits, record ledger, create enrollment, log activity
+      const result = await prisma.$transaction([
+        prisma.user.update({
+          where: { id: user.id },
+          data: {
+            credits: {
+              decrement: creditCost,
+            },
+          },
+        }),
+        prisma.creditTransaction.create({
+          data: {
+            userId: user.id,
+            amount: -creditCost,
+            type: "ENROLLMENT",
+            description: `Enrolled in ${course.title} (-${creditCost} Credits)`,
+            metadata: JSON.stringify({
+              courseId: course.id,
+              courseSlug: course.slug,
+              creditsSpent: creditCost,
+            }),
+          },
+        }),
+        prisma.enrollment.create({
+          data: {
+            userId: user.id,
+            courseId: course.id,
+            pricePaid: 0,
+            creditsSpent: creditCost,
+            currency: course.currency,
+            paymentMethod: "CREDITS",
+            billingDetails: JSON.stringify(billingDetails || { method: "CREDITS" }),
+            status: "ACTIVE",
+          },
+        }),
+        prisma.activity.create({
+          data: {
+            userId: user.id,
+            type: "ENROLLED",
+            title: `Enrolled in ${course.title} via Credits`,
+            description: `Unlocked lifetime curriculum license with ${creditCost} credits.`,
+          },
+        }),
+      ]);
+
+      enrollment = result[2];
+    } else {
+      enrollment = await prisma.enrollment.create({
+        data: {
+          userId: user.id,
+          courseId: course.id,
+          pricePaid: course.price,
+          currency: course.currency,
+          paymentMethod: paymentMethod || "MOCK_CARD",
+          billingDetails: JSON.stringify(billingDetails || {}),
+          status: "ACTIVE",
+        },
+      });
+
+      // Record activity
+      await prisma.activity.create({
+        data: {
+          userId: user.id,
+          type: "ENROLLED",
+          title: `Enrolled in ${course.title}`,
+          description: `Successfully completed mock transaction of €${course.price} via ${paymentMethod || "Mock Card"}.`,
+        },
+      });
+    }
 
     const firstLessonSlug = course.lessons[0]?.slug || "";
     const redirectUrl = firstLessonSlug

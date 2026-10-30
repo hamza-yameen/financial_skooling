@@ -9,6 +9,7 @@ export interface CartItem {
   title: string;
   slug: string;
   price: number; // in EUR
+  creditsCost?: number;
   duration: string;
   coverImage?: string | null;
 }
@@ -26,22 +27,54 @@ interface CurrencyCartContextType {
   setIsCartOpen: (open: boolean) => void;
   cartCount: number;
   totalEur: number;
+  totalCredits: number;
+  // Credits system integration
+  userCredits: number | null;
+  setUserCredits: React.Dispatch<React.SetStateAction<number | null>>;
+  isCreditsModalOpen: boolean;
+  setIsCreditsModalOpen: (open: boolean) => void;
+  refreshCredits: () => Promise<void>;
 }
 
-const CurrencyCartContext = createContext<CurrencyCartContextType | undefined>(undefined);
+const CurrencyCartContext = createContext<CurrencyCartContextType | undefined>(
+  undefined
+);
 
 // Exchange rate approx: 1 EUR = 0.85 GBP
 const GBP_RATE = 0.85;
 
-export function CurrencyCartProvider({ children }: { children: React.ReactNode }) {
+export function CurrencyCartProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const [currency, setCurrencyState] = useState<Currency>("EUR");
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [userCredits, setUserCredits] = useState<number | null>(null);
+  const [isCreditsModalOpen, setIsCreditsModalOpen] = useState(false);
 
-  // Load from localStorage on client mount
+  // Fetch user credit balance
+  const refreshCredits = async () => {
+    try {
+      const res = await fetch("/api/credits/balance");
+      const data = await res.json();
+      if (data.authenticated) {
+        setUserCredits(data.credits);
+      } else {
+        setUserCredits(null);
+      }
+    } catch {
+      setUserCredits(null);
+    }
+  };
+
+  // Load from localStorage and fetch credits on client mount
   useEffect(() => {
     try {
-      const savedCurrency = localStorage.getItem("finskool_currency") as Currency | null;
+      const savedCurrency = localStorage.getItem("finskool_currency") as
+        | Currency
+        | null;
       if (savedCurrency === "EUR" || savedCurrency === "GBP") {
         setCurrencyState(savedCurrency);
       }
@@ -53,6 +86,8 @@ export function CurrencyCartProvider({ children }: { children: React.ReactNode }
     } catch (err) {
       console.error("Cart storage error:", err);
     }
+
+    refreshCredits();
   }, []);
 
   const setCurrency = (c: Currency) => {
@@ -102,6 +137,10 @@ export function CurrencyCartProvider({ children }: { children: React.ReactNode }
   };
 
   const totalEur = cart.reduce((sum, item) => sum + item.price, 0);
+  const totalCredits = cart.reduce(
+    (sum, item) => sum + (item.creditsCost || Math.round(item.price / 10)),
+    0
+  );
 
   return (
     <CurrencyCartContext.Provider
@@ -118,6 +157,12 @@ export function CurrencyCartProvider({ children }: { children: React.ReactNode }
         setIsCartOpen,
         cartCount: cart.length,
         totalEur,
+        totalCredits,
+        userCredits,
+        setUserCredits,
+        isCreditsModalOpen,
+        setIsCreditsModalOpen,
+        refreshCredits,
       }}
     >
       {children}
@@ -128,7 +173,9 @@ export function CurrencyCartProvider({ children }: { children: React.ReactNode }
 export function useCurrencyCart() {
   const context = useContext(CurrencyCartContext);
   if (!context) {
-    throw new Error("useCurrencyCart must be used within a CurrencyCartProvider");
+    throw new Error(
+      "useCurrencyCart must be used within a CurrencyCartProvider"
+    );
   }
   return context;
 }

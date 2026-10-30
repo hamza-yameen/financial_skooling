@@ -32,22 +32,22 @@ export default async function CoursesPage() {
   ]);
 
   return (
-    <div className="relative overflow-hidden min-h-screen">
-      {/* Background ambient pastel blooms */}
-      <div className="absolute top-10 left-1/3 w-[600px] h-[400px] bg-[#8B9B6D]/15 rounded-full blur-[130px] pointer-events-none" />
-      <div className="absolute top-80 right-[-100px] w-[500px] h-[500px] bg-[#BAC8A1]/20 rounded-full blur-[140px] pointer-events-none" />
+    <div className="relative overflow-hidden min-h-screen bg-[#EDF1F5]">
+      {/* Background ambient blooms */}
+      <div className="absolute top-10 left-1/3 w-[600px] h-[400px] bg-[#31F2BF]/10 rounded-full blur-[130px] pointer-events-none" />
+      <div className="absolute top-80 right-[-100px] w-[500px] h-[500px] bg-[#34BCFF]/10 rounded-full blur-[140px] pointer-events-none" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         {/* Header */}
         <div className="max-w-3xl mb-12 space-y-4">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#8B9B6D]/10 border border-[#8B9B6D]/30 text-xs font-mono font-bold text-[#384524] uppercase tracking-widest shadow-xs">
-            <Layers className="w-3.5 h-3.5 text-[#5C6E42]" />
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#E3FFF3] border border-[#31F2BF]/40 text-xs font-mono font-bold text-[#007554] uppercase tracking-widest shadow-xs">
+            <Layers className="w-3.5 h-3.5 text-[#007554]" />
             SYSTEMATIC FINANCIAL CURRICULUM
           </div>
-          <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-[#1C2417]">
-            Programs & <span className="text-gradient-primary">Specialized Labs</span>
+          <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-[#1D2A36]">
+            Programs & <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1D2A36] via-[#007554] to-[#31F2BF]">Specialized Labs</span>
           </h1>
-          <p className="text-base text-[#4A5836] leading-relaxed font-medium">
+          <p className="text-base text-[#657482] leading-relaxed font-medium">
             Every program is structured around dense, actionable PDF manuals and production spreadsheet
             underwriting engines. One-time purchase, zero monthly lock-in.
           </p>

@@ -1,14 +1,19 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   ArrowRight,
   CheckCircle2,
   Lock,
   ShoppingBag,
   Check,
+  Coins,
+  Sparkles,
+  Loader2,
 } from "lucide-react";
+import { toast } from "sonner";
 import { useCurrencyCart } from "./CurrencyCartContext";
 
 interface CourseEnrollCardProps {
@@ -17,6 +22,7 @@ interface CourseEnrollCardProps {
     title: string;
     slug: string;
     price: number;
+    creditsCost?: number;
     originalPrice: number | null;
     duration: string;
     coverImage: string | null;
@@ -25,7 +31,19 @@ interface CourseEnrollCardProps {
 }
 
 export default function CourseEnrollCard({ course }: CourseEnrollCardProps) {
-  const { formatPrice, addToCart, isInCart } = useCurrencyCart();
+  const router = useRouter();
+  const {
+    formatPrice,
+    addToCart,
+    isInCart,
+    userCredits,
+    setIsCreditsModalOpen,
+    refreshCredits,
+  } = useCurrencyCart();
+
+  const creditCost = course.creditsCost || Math.max(10, Math.round(course.price / 10));
+  const hasEnoughCredits = userCredits !== null && userCredits >= creditCost;
+  const [enrollingWithCredits, setEnrollingWithCredits] = useState(false);
 
   const handleAddToCart = () => {
     addToCart({
@@ -33,63 +51,167 @@ export default function CourseEnrollCard({ course }: CourseEnrollCardProps) {
       title: course.title,
       slug: course.slug,
       price: course.price,
+      creditsCost: creditCost,
       duration: course.duration,
       coverImage: course.coverImage,
     });
   };
 
+  const handleEnrollWithCredits = async () => {
+    if (userCredits === null) {
+      // Guest: redirect to checkout where they can sign in or use credits
+      router.push(`/checkout/${course.slug}?method=credits`);
+      return;
+    }
+
+    if (!hasEnoughCredits) {
+      toast.info(
+        `You need ${creditCost - (userCredits ?? 0)} more credits. Choose a top-up package to continue.`
+      );
+      router.push("/credits");
+      return;
+    }
+
+    setEnrollingWithCredits(true);
+    const toastId = toast.loading(`Unlocking course with ${creditCost} credits...`);
+
+    try {
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          courseSlug: course.slug,
+          paymentMethod: "CREDITS",
+        }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || "Failed to enroll with credits");
+      }
+
+      await refreshCredits();
+      toast.success("Enrolled successfully! Opening course player...", {
+        id: toastId,
+      });
+      router.push(data.redirectUrl || `/student/courses/${course.slug}`);
+      router.refresh();
+    } catch (err: unknown) {
+      const msg = (err as { message?: string })?.message || "Failed to enroll with credits";
+      toast.error(msg, { id: toastId });
+      setEnrollingWithCredits(false);
+    }
+  };
+
   return (
-    <div className="sticky top-28 rounded-3xl bg-white border border-[#EBE2D6] p-7 shadow-xl shadow-[#8B9B6D]/10 space-y-6">
+    <div className="sticky top-28 rounded-2xl bg-white border border-[#D5DEE5] p-7 shadow-lg shadow-[#0C1927]/06 space-y-6">
       {/* Price Header */}
       <div>
-        <span className="text-[10px] text-[#7E8773] font-mono uppercase tracking-wider font-bold block">
-          ONE-TIME PERPETUAL LICENSE
-        </span>
-        <div className="flex items-baseline gap-3 mt-1">
-          <span className="text-4xl font-black text-[#1C2417] tracking-tight">
+        <div className="flex items-center justify-between">
+          <span className="text-[10px] text-[#657482] font-mono uppercase tracking-wider font-bold block">
+            ONE-TIME PERPETUAL LICENSE
+          </span>
+          <span className="text-[10px] font-bold text-[#007554] bg-[#E3FFF3] px-2.5 py-0.5 rounded-full border border-[#31F2BF]/40 font-mono">
+            {creditCost} CREDITS
+          </span>
+        </div>
+
+        <div className="flex items-baseline gap-3 mt-1.5">
+          <span className="text-4xl font-black text-[#1D2A36] tracking-tight font-mono">
             {formatPrice(course.price)}
           </span>
           {course.originalPrice && (
-            <span className="text-base text-[#7E8773] line-through">
+            <span className="text-base text-[#8995A1] line-through font-mono">
               {formatPrice(course.originalPrice)}
             </span>
           )}
-          <span className="text-xs font-bold text-[#4A5836] bg-[#8B9B6D]/15 px-2.5 py-0.5 rounded-full border border-[#8B9B6D]/30">
+          <span className="text-xs font-bold text-[#007554] bg-[#E3FFF3] px-2.5 py-0.5 rounded-full border border-[#31F2BF]/40 font-mono">
             SAVE 50%
           </span>
         </div>
-        <p className="text-[11px] text-[#636B58] mt-1">
-          Zero recurring fees. Instant access to all manuals & updates.
-        </p>
+
+        {/* Credit Option Highlight */}
+        <div className="mt-3 p-3 rounded-xl bg-[#F5F8FA] border border-[#D5DEE5] flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Coins className="w-4 h-4 text-[#007554]" />
+            <span className="text-xs font-bold text-[#1D2A36]">
+              Or unlock with {creditCost} Credits
+            </span>
+          </div>
+          {userCredits !== null ? (
+            <span className="text-[11px] font-mono font-bold text-[#007554]">
+              Balance: {userCredits} Cr
+            </span>
+          ) : (
+            <Link
+              href="/credits"
+              className="text-[11px] font-bold text-[#007554] hover:underline cursor-pointer font-mono"
+            >
+              Get Credits
+            </Link>
+          )}
+        </div>
       </div>
 
-      {/* Action Buttons: Enroll Now + Add to Cart */}
+      {/* Action Buttons: Enroll with Credits, Standard Checkout, Add to Cart */}
       <div className="space-y-2.5">
+        {/* Option 1: Instant Enroll with Credits */}
+        <button
+          type="button"
+          onClick={handleEnrollWithCredits}
+          disabled={enrollingWithCredits}
+          className="w-full py-3.5 rounded-xl bg-[#1D2A36] hover:bg-[#132030] text-white font-extrabold text-sm shadow-md shadow-[#1D2A36]/15 flex items-center justify-center gap-2 hover:scale-[1.01] active:scale-[0.99] transition-all cursor-pointer disabled:opacity-50 border border-[#132030]"
+        >
+          {enrollingWithCredits ? (
+            <>
+              <Loader2 className="w-4 h-4 animate-spin" />
+              <span>Unlocking Curriculum...</span>
+            </>
+          ) : hasEnoughCredits ? (
+            <>
+              <Coins className="w-4 h-4 text-[#31F2BF]" />
+              <span>Unlock Instantly ({creditCost} Credits)</span>
+            </>
+          ) : userCredits !== null ? (
+            <>
+              <Coins className="w-4 h-4 text-[#31F2BF]" />
+              <span>Top Up & Unlock ({creditCost} Credits)</span>
+            </>
+          ) : (
+            <>
+              <Coins className="w-4 h-4 text-[#31F2BF]" />
+              <span>Unlock with {creditCost} Credits</span>
+            </>
+          )}
+        </button>
+
+        {/* Option 2: Direct Card / Bank Checkout */}
         <Link
           href={`/checkout/${course.slug}`}
-          className="w-full py-4 rounded-full bg-gradient-to-r from-[#5C6E42] via-[#6E8050] to-[#8B9B6D] hover:opacity-95 text-white font-extrabold text-sm shadow-xl shadow-[#8B9B6D]/30 flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
+          className="w-full py-3 rounded-xl bg-[#007554] hover:bg-[#053226] text-white font-bold text-xs shadow-xs flex items-center justify-center gap-2 hover:scale-[1.01] active:scale-[0.99] transition-all cursor-pointer"
         >
-          Enroll Now (Instant Unlock)
-          <ArrowRight className="w-4 h-4" />
+          Pay {formatPrice(course.price)} with Card / Wire
+          <ArrowRight className="w-3.5 h-3.5" />
         </Link>
 
+        {/* Option 3: Add to Cart */}
         <button
           type="button"
           onClick={handleAddToCart}
-          className={`w-full py-3 rounded-full border text-xs font-bold flex items-center justify-center gap-2 transition-all cursor-pointer ${
+          className={`w-full py-2.5 rounded-xl border text-xs font-bold flex items-center justify-center gap-2 transition-all cursor-pointer ${
             isInCart(course.id)
-              ? "bg-[#8B9B6D]/15 border-[#8B9B6D]/40 text-[#4A5836]"
-              : "bg-[#F7F2EB] hover:bg-[#EBE2D6] border-[#EBE2D6] text-[#1C2417] hover:border-[#8B9B6D]/40"
+              ? "bg-[#E3FFF3] border-[#31F2BF]/50 text-[#007554]"
+              : "bg-[#F5F8FA] hover:bg-[#E1E5E9] border-[#D5DEE5] text-[#1D2A36] hover:border-[#8995A1]"
           }`}
         >
           {isInCart(course.id) ? (
             <>
-              <Check className="w-4 h-4 text-[#5C6E42]" />
+              <Check className="w-3.5 h-3.5 text-[#007554]" />
               In Study Cart — View Cart
             </>
           ) : (
             <>
-              <ShoppingBag className="w-4 h-4 text-[#5C6E42]" />
+              <ShoppingBag className="w-3.5 h-3.5 text-[#007554]" />
               Add to Study Cart
             </>
           )}
@@ -97,30 +219,31 @@ export default function CourseEnrollCard({ course }: CourseEnrollCardProps) {
       </div>
 
       {/* Highlights List */}
-      <div className="space-y-3 pt-4 border-t border-[#EBE2D6]">
-        <span className="text-xs font-bold text-[#1C2417] uppercase tracking-wider block">
-          What Is Included:
+      <div className="space-y-3 pt-4 border-t border-[#D5DEE5]">
+        <span className="text-[10px] font-mono uppercase font-bold text-[#657482] tracking-wider block">
+          INCLUDED IN THIS LICENSE
         </span>
-        <ul className="space-y-2.5 text-xs text-[#636B58]">
-          {course.highlights.map((h, i) => (
+        <ul className="space-y-2 text-xs text-[#657482]">
+          {course.highlights.slice(0, 4).map((h, i) => (
             <li key={i} className="flex items-start gap-2">
-              <CheckCircle2 className="w-4 h-4 text-[#5C6E42] shrink-0 mt-0.5" />
-              <span className="font-medium text-[#1C2417]">{h}</span>
+              <CheckCircle2 className="w-4 h-4 text-[#007554] shrink-0 mt-0.5" />
+              <span className="text-[#1D2A36] font-medium">{h}</span>
             </li>
           ))}
         </ul>
       </div>
 
-      {/* Trust Badges */}
-      <div className="p-4 rounded-2xl bg-[#F7F2EB] border border-[#EBE2D6] space-y-2 text-[11px] text-[#636B58]">
-        <div className="flex items-center gap-2 text-[#1C2417] font-bold">
-          <Lock className="w-3.5 h-3.5 text-[#5C6E42]" />
-          14-Day Operational Guarantee
+      {/* Security Guarantee */}
+      <div className="p-4 rounded-xl bg-[#F5F8FA] border border-[#D5DEE5] flex items-center gap-3 text-xs text-[#657482]">
+        <Lock className="w-4 h-4 text-[#007554] shrink-0" />
+        <div>
+          <span className="font-bold text-[#1D2A36] block">
+            Direct & Safe Enrollment
+          </span>
+          <span className="text-[11px] text-[#8995A1]">
+            Instant field manual downloads & simulator access.
+          </span>
         </div>
-        <p className="leading-relaxed">
-          If the technical depth does not surpass any financial program you have experienced,
-          contact support within 14 days for a prompt refund.
-        </p>
       </div>
     </div>
   );

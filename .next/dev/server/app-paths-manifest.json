@@ -1,19 +1,10 @@
 {
-  "/admin/activity/page": "app/admin/activity/page.js",
-  "/admin/categories/page": "app/admin/categories/page.js",
-  "/admin/courses/page": "app/admin/courses/page.js",
-  "/admin/enrollments/page": "app/admin/enrollments/page.js",
+  "/admin/credit-packages/page": "app/admin/credit-packages/page.js",
   "/admin/page": "app/admin/page.js",
-  "/admin/students/page": "app/admin/students/page.js",
-  "/api/auth/login/route": "app/api/auth/login/route.js",
   "/api/auth/logout/route": "app/api/auth/logout/route.js",
   "/api/auth/me/route": "app/api/auth/me/route.js",
-  "/api/auth/register/route": "app/api/auth/register/route.js",
-  "/checkout/[courseSlug]/page": "app/checkout/[courseSlug]/page.js",
-  "/courses/[slug]/page": "app/courses/[slug]/page.js",
-  "/courses/page": "app/courses/page.js",
-  "/login/page": "app/login/page.js",
-  "/page": "app/page.js",
-  "/student/courses/page": "app/student/courses/page.js",
-  "/student/dashboard/page": "app/student/dashboard/page.js"
+  "/api/credits/balance/route": "app/api/credits/balance/route.js",
+  "/checkout/credits/[packageId]/page": "app/checkout/credits/[packageId]/page.js",
+  "/credits/page": "app/credits/page.js",
+  "/page": "app/page.js"
 }

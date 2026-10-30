@@ -162,34 +162,34 @@ export default function RiskSimulator({ compact = false }: { compact?: boolean }
   }, [simulation.equityCurve, initialCapital, tradeCount]);
 
   return (
-    <div className="rounded-3xl bg-white border border-[#EBE2D6] p-6 sm:p-8 shadow-sm relative overflow-hidden">
+    <div className="rounded-xl bg-white border border-[#D5DEE5] p-6 sm:p-8 shadow-xs relative overflow-hidden">
       {/* Background ambient pastel bloom */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-[#8B9B6D]/15 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-0 right-0 w-96 h-96 bg-[#31F2BF]/10 rounded-full blur-3xl pointer-events-none" />
 
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-[#EBE2D6]">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-[#EDF1F5]">
         <div>
           <div className="flex items-center gap-2">
-            <span className="p-2 rounded-xl bg-[#8B9B6D]/10 border border-[#8B9B6D]/30 text-[#5C6E42]">
+            <span className="p-2 rounded-lg bg-[#E3FFF3] border border-[#31F2BF]/30 text-[#007554]">
               <Activity className="w-4 h-4" />
             </span>
-            <h3 className="text-xl font-black text-[#1C2417] tracking-tight">
+            <h3 className="text-xl font-black text-[#1D2A36] tracking-tight">
               Monte Carlo Risk & Drawdown Engine
             </h3>
-            <span className="text-[10px] font-mono font-bold uppercase px-2.5 py-0.5 rounded-full bg-[#8B9B6D]/15 text-[#384524] border border-[#8B9B6D]/30">
+            <span className="text-[10px] font-mono font-bold uppercase px-2.5 py-0.5 rounded-full bg-[#132030] text-[#31F2BF] border border-[#31F2BF]/20">
               v2.4 ⚡
             </span>
           </div>
-          <p className="text-xs text-[#4A5836] mt-1 font-medium">
+          <p className="text-xs text-[#657482] mt-1 font-medium">
             Simulate portfolio survival, sequence-of-returns volatility, and mathematical ruin probability.
           </p>
         </div>
 
         <button
           onClick={handleRegenerate}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#8B9B6D]/10 hover:bg-[#8B9B6D]/20 text-xs font-bold text-[#384524] border border-[#8B9B6D]/30 transition-all shadow-xs cursor-pointer hover:scale-105 active:scale-95"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#F5F8FA] hover:bg-white text-xs font-bold text-[#1D2A36] border border-[#D5DEE5] transition-all shadow-xs cursor-pointer hover:border-[#8995A1] active:scale-95"
         >
-          <RefreshCw className="w-3.5 h-3.5 text-[#5C6E42]" />
+          <RefreshCw className="w-3.5 h-3.5 text-[#007554]" />
           Re-seed Monte Carlo Run
         </button>
       </div>
@@ -201,8 +201,8 @@ export default function RiskSimulator({ compact = false }: { compact?: boolean }
           {/* Starting Capital */}
           <div className="space-y-1.5">
             <div className="flex justify-between text-xs font-semibold">
-              <span className="text-[#4A5836]">Starting Portfolio Balance</span>
-              <span className="font-mono text-[#5C6E42] font-bold" suppressHydrationWarning>
+              <span className="text-[#657482]">Starting Portfolio Balance</span>
+              <span className="font-mono text-[#007554] font-bold" suppressHydrationWarning>
                 €{initialCapital.toLocaleString("en-US")}
               </span>
             </div>
@@ -213,15 +213,15 @@ export default function RiskSimulator({ compact = false }: { compact?: boolean }
               step="5000"
               value={initialCapital}
               onChange={(e) => setInitialCapital(Number(e.target.value))}
-              className="w-full h-2 bg-[#EBE2D6] rounded-lg appearance-none cursor-pointer accent-[#5C6E42]"
+              className="w-full h-2 bg-[#EDF1F5] rounded-lg appearance-none cursor-pointer accent-[#1D2A36]"
             />
           </div>
 
           {/* Risk Per Trade */}
           <div className="space-y-1.5">
             <div className="flex justify-between text-xs font-semibold">
-              <span className="text-[#4A5836]">Risk Per Trade</span>
-              <span className="font-mono text-[#5C6E42] font-bold" suppressHydrationWarning>
+              <span className="text-[#657482]">Risk Per Trade</span>
+              <span className="font-mono text-[#007554] font-bold" suppressHydrationWarning>
                 {riskPercent.toFixed(1)}% (€{Math.round(initialCapital * (riskPercent / 100)).toLocaleString("en-US")})
               </span>
             </div>
@@ -232,15 +232,15 @@ export default function RiskSimulator({ compact = false }: { compact?: boolean }
               step="0.1"
               value={riskPercent}
               onChange={(e) => setRiskPercent(Number(e.target.value))}
-              className="w-full h-2 bg-[#EBE2D6] rounded-lg appearance-none cursor-pointer accent-[#5C6E42]"
+              className="w-full h-2 bg-[#EDF1F5] rounded-lg appearance-none cursor-pointer accent-[#1D2A36]"
             />
           </div>
 
           {/* Win Rate */}
           <div className="space-y-1.5">
             <div className="flex justify-between text-xs font-semibold">
-              <span className="text-[#4A5836]">Historical Win Rate</span>
-              <span className="font-mono text-[#5C6E42] font-bold">{winRate}%</span>
+              <span className="text-[#657482]">Historical Win Rate</span>
+              <span className="font-mono text-[#007554] font-bold">{winRate}%</span>
             </div>
             <input
               type="range"
@@ -249,15 +249,15 @@ export default function RiskSimulator({ compact = false }: { compact?: boolean }
               step="1"
               value={winRate}
               onChange={(e) => setWinRate(Number(e.target.value))}
-              className="w-full h-2 bg-[#EBE2D6] rounded-lg appearance-none cursor-pointer accent-[#5C6E42]"
+              className="w-full h-2 bg-[#EDF1F5] rounded-lg appearance-none cursor-pointer accent-[#1D2A36]"
             />
           </div>
 
           {/* Reward to Risk Ratio */}
           <div className="space-y-1.5">
             <div className="flex justify-between text-xs font-semibold">
-              <span className="text-[#4A5836]">Reward-to-Risk (R:R)</span>
-              <span className="font-mono text-[#5C6E42] font-bold">1 : {rewardRisk.toFixed(1)}</span>
+              <span className="text-[#657482]">Reward-to-Risk (R:R)</span>
+              <span className="font-mono text-[#007554] font-bold">1 : {rewardRisk.toFixed(1)}</span>
             </div>
             <input
               type="range"
@@ -266,15 +266,15 @@ export default function RiskSimulator({ compact = false }: { compact?: boolean }
               step="0.1"
               value={rewardRisk}
               onChange={(e) => setRewardRisk(Number(e.target.value))}
-              className="w-full h-2 bg-[#EBE2D6] rounded-lg appearance-none cursor-pointer accent-[#5C6E42]"
+              className="w-full h-2 bg-[#EDF1F5] rounded-lg appearance-none cursor-pointer accent-[#1D2A36]"
             />
           </div>
 
           {!compact && (
             <div className="space-y-1.5">
               <div className="flex justify-between text-xs font-semibold">
-                <span className="text-[#4A5836]">Sample Iteration Trades</span>
-                <span className="font-mono text-[#5C6E42] font-bold">{tradeCount} Rounds</span>
+                <span className="text-[#657482]">Sample Iteration Trades</span>
+                <span className="font-mono text-[#007554] font-bold">{tradeCount} Rounds</span>
               </div>
               <input
                 type="range"
@@ -283,23 +283,23 @@ export default function RiskSimulator({ compact = false }: { compact?: boolean }
                 step="10"
                 value={tradeCount}
                 onChange={(e) => setTradeCount(Number(e.target.value))}
-                className="w-full h-2 bg-[#EBE2D6] rounded-lg appearance-none cursor-pointer accent-[#5C6E42]"
+                className="w-full h-2 bg-[#EDF1F5] rounded-lg appearance-none cursor-pointer accent-[#1D2A36]"
               />
             </div>
           )}
 
           {/* Status Alert Banner */}
           <div
-            className={`p-4 rounded-2xl border text-xs flex items-start gap-3 transition-colors ${
+            className={`p-4 rounded-xl border text-xs flex items-start gap-3 transition-colors ${
               simulation.riskStatus === "OPTIMAL"
-                ? "bg-emerald-50 border-emerald-200 text-emerald-800"
+                ? "bg-[#E3FFF3] border-[#31F2BF]/40 text-[#007554]"
                 : simulation.riskStatus === "CAUTION"
                 ? "bg-amber-50 border-amber-200 text-amber-800"
                 : "bg-rose-50 border-rose-200 text-rose-800"
             }`}
           >
             {simulation.riskStatus === "OPTIMAL" ? (
-              <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+              <CheckCircle2 className="w-4 h-4 text-[#007554] shrink-0 mt-0.5" />
             ) : (
               <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
             )}
@@ -315,16 +315,16 @@ export default function RiskSimulator({ compact = false }: { compact?: boolean }
         {/* Visualizer & Metrics Column */}
         <div className="lg:col-span-7 flex flex-col justify-between space-y-4">
           {/* Equity Chart Viewport (Sleek High-Contrast Cockpit) */}
-          <div className="p-5 rounded-2xl bg-slate-950 border border-slate-900 flex-1 flex flex-col justify-between shadow-lg">
-            <div className="flex items-center justify-between text-xs text-slate-400 mb-2">
-              <span className="font-mono font-medium flex items-center gap-1.5">
-                <TrendingUp className="w-3.5 h-3.5 text-cyan-400" />
+          <div className="p-5 rounded-xl bg-[#132030] border border-[#314352] flex-1 flex flex-col justify-between shadow-lg">
+            <div className="flex items-center justify-between text-xs text-[#8995A1] mb-2">
+              <span className="font-mono font-medium flex items-center gap-1.5 text-white/90">
+                <TrendingUp className="w-3.5 h-3.5 text-[#31F2BF]" />
                 Simulated Equity Curve ({tradeCount} Iterations)
               </span>
               <span
                 suppressHydrationWarning
                 className={`font-mono font-bold ${
-                  simulation.netProfit >= 0 ? "text-emerald-400" : "text-rose-400"
+                  simulation.netProfit >= 0 ? "text-[#31F2BF]" : "text-rose-400"
                 }`}
               >
                 {simulation.netProfit >= 0 ? "+" : ""}
@@ -341,8 +341,8 @@ export default function RiskSimulator({ compact = false }: { compact?: boolean }
               >
                 <defs>
                   <linearGradient id="curveGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" stopColor="#06b6d4" stopOpacity="0.3" />
-                    <stop offset="100%" stopColor="#06b6d4" stopOpacity="0.0" />
+                    <stop offset="0%" stopColor="#31F2BF" stopOpacity="0.3" />
+                    <stop offset="100%" stopColor="#31F2BF" stopOpacity="0.0" />
                   </linearGradient>
                 </defs>
 
@@ -359,7 +359,7 @@ export default function RiskSimulator({ compact = false }: { compact?: boolean }
                 {/* Curve */}
                 <polyline
                   fill="none"
-                  stroke={simulation.netProfit >= 0 ? "#10b981" : "#f43f5e"}
+                  stroke={simulation.netProfit >= 0 ? "#31F2BF" : "#f43f5e"}
                   strokeWidth="2.5"
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -368,10 +368,10 @@ export default function RiskSimulator({ compact = false }: { compact?: boolean }
               </svg>
             </div>
 
-            <div className="flex justify-between items-center text-[10px] font-mono text-slate-400 pt-2 border-t border-slate-800">
+            <div className="flex justify-between items-center text-[10px] font-mono text-[#8995A1] pt-2 border-t border-[#314352]">
               <span suppressHydrationWarning>Trade #0: €{initialCapital.toLocaleString("en-US")}</span>
               <span suppressHydrationWarning>
-                Wins: <strong className="text-emerald-400 font-bold">{simulation.wins}</strong> | Losses:{" "}
+                Wins: <strong className="text-[#31F2BF] font-bold">{simulation.wins}</strong> | Losses:{" "}
                 <strong className="text-rose-400 font-bold">{simulation.losses}</strong>
               </span>
               <span suppressHydrationWarning>Final: €{simulation.finalEquity.toLocaleString("en-US")}</span>
@@ -380,53 +380,53 @@ export default function RiskSimulator({ compact = false }: { compact?: boolean }
 
           {/* Key Quant Metrics Bar */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-            <div className="p-3 rounded-2xl bg-[#F7F2EB] border border-[#EBE2D6]">
-              <span className="text-[10px] text-[#4A5836] uppercase tracking-wider font-bold block">
+            <div className="p-3 rounded-lg bg-[#F5F8FA] border border-[#D5DEE5]">
+              <span className="text-[10px] text-[#657482] uppercase tracking-wider font-bold block">
                 EV Per Trade
               </span>
               <p
                 suppressHydrationWarning
                 className={`text-sm font-bold font-mono mt-0.5 ${
-                  simulation.expectedValueR > 0 ? "text-[#384524]" : "text-rose-600"
+                  simulation.expectedValueR > 0 ? "text-[#007554]" : "text-rose-600"
                 }`}
               >
                 +{simulation.expectedValueR.toFixed(2)} R
               </p>
-              <span className="text-[9px] text-[#4A5836] font-mono" suppressHydrationWarning>
+              <span className="text-[9px] text-[#8995A1] font-mono" suppressHydrationWarning>
                 +€{Math.round(simulation.expectedValueEuro).toLocaleString("en-US")} / trade
               </span>
             </div>
 
-            <div className="p-3 rounded-2xl bg-[#F7F2EB] border border-[#EBE2D6]">
-              <span className="text-[10px] text-[#4A5836] uppercase tracking-wider font-bold block">
+            <div className="p-3 rounded-lg bg-[#F5F8FA] border border-[#D5DEE5]">
+              <span className="text-[10px] text-[#657482] uppercase tracking-wider font-bold block">
                 Max Drawdown
               </span>
               <p className="text-sm font-bold font-mono text-amber-700 mt-0.5" suppressHydrationWarning>
                 -{simulation.maxDrawdownPercent}%
               </p>
-              <span className="text-[9px] text-[#4A5836] font-mono" suppressHydrationWarning>
+              <span className="text-[9px] text-[#8995A1] font-mono" suppressHydrationWarning>
                 -€{simulation.maxDrawdownEuro.toLocaleString("en-US")} peak
               </span>
             </div>
 
-            <div className="p-3 rounded-2xl bg-[#F7F2EB] border border-[#EBE2D6]">
-              <span className="text-[10px] text-[#4A5836] uppercase tracking-wider font-bold block">
+            <div className="p-3 rounded-lg bg-[#F5F8FA] border border-[#D5DEE5]">
+              <span className="text-[10px] text-[#657482] uppercase tracking-wider font-bold block">
                 Quarter Kelly
               </span>
-              <p className="text-sm font-bold font-mono text-[#5C6E42] mt-0.5" suppressHydrationWarning>
+              <p className="text-sm font-bold font-mono text-[#007554] mt-0.5" suppressHydrationWarning>
                 {simulation.recommendedQuarterKelly.toFixed(1)}%
               </p>
-              <span className="text-[9px] text-[#4A5836] font-mono">Theoretical Max</span>
+              <span className="text-[9px] text-[#8995A1] font-mono">Theoretical Max</span>
             </div>
 
-            <div className="p-3 rounded-2xl bg-[#F7F2EB] border border-[#EBE2D6]">
-              <span className="text-[10px] text-[#4A5836] uppercase tracking-wider font-bold block">
+            <div className="p-3 rounded-lg bg-[#F5F8FA] border border-[#D5DEE5]">
+              <span className="text-[10px] text-[#657482] uppercase tracking-wider font-bold block">
                 Max Loss Streak
               </span>
-              <p className="text-sm font-bold font-mono text-[#1C2417] mt-0.5" suppressHydrationWarning>
+              <p className="text-sm font-bold font-mono text-[#1D2A36] mt-0.5" suppressHydrationWarning>
                 {simulation.expectedMaxLosingStreak} Trades
               </p>
-              <span className="text-[9px] text-[#4A5836] font-mono">Expected stat</span>
+              <span className="text-[9px] text-[#8995A1] font-mono">Expected stat</span>
             </div>
           </div>
         </div>

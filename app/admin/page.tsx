@@ -6,11 +6,8 @@ import {
   Users,
   BookOpen,
   TrendingUp,
-  ArrowRight,
   Plus,
   CreditCard,
-  Activity,
-  CheckCircle2,
 } from "lucide-react";
 
 export const dynamic = "force-dynamic";
@@ -37,46 +34,36 @@ export default async function AdminDashboardPage() {
   let dbNotice: string | null = null;
 
   try {
-    // Execute in small batches to respect DigitalOcean PostgreSQL low client connection ceiling
-    const [students, courses, enrollments] = await Promise.all([
-      prisma.user.count({ where: { role: "STUDENT" } }),
-      prisma.course.count(),
-      prisma.enrollment.count(),
-    ]);
-    totalStudents = students;
-    totalCourses = courses;
-    totalEnrollments = enrollments;
+    // Execute sequentially with individual catches to respect DigitalOcean low connection ceiling
+    totalStudents = await prisma.user.count({ where: { role: "STUDENT" } }).catch(() => 0);
+    totalCourses = await prisma.course.count().catch(() => 0);
+    totalEnrollments = await prisma.enrollment.count().catch(() => 0);
 
-    const [revenueRes, completedCount] = await Promise.all([
-      prisma.enrollment.aggregate({
-        _sum: { pricePaid: true },
-      }),
-      prisma.enrollment.count({
-        where: { status: "COMPLETED" },
-      }),
-    ]);
+    const revenueRes = await prisma.enrollment.aggregate({
+      _sum: { pricePaid: true },
+    }).catch(() => ({ _sum: { pricePaid: 0 } }));
     totalRevenue = revenueRes._sum.pricePaid || 0;
-    completedEnrollments = completedCount;
 
-    const [enrollmentsList, activitiesList] = await Promise.all([
-      prisma.enrollment.findMany({
-        take: 5,
-        orderBy: { enrolledAt: "desc" },
-        include: {
-          user: { select: { name: true, email: true } },
-          course: { select: { title: true, price: true } },
-        },
-      }),
-      prisma.activity.findMany({
-        take: 6,
-        orderBy: { createdAt: "desc" },
-        include: {
-          user: { select: { name: true, role: true } },
-        },
-      }),
-    ]);
-    recentEnrollments = enrollmentsList;
-    recentActivities = activitiesList;
+    completedEnrollments = await prisma.enrollment.count({
+      where: { status: "COMPLETED" },
+    }).catch(() => 0);
+
+    recentEnrollments = await prisma.enrollment.findMany({
+      take: 5,
+      orderBy: { enrolledAt: "desc" },
+      include: {
+        user: { select: { name: true, email: true } },
+        course: { select: { title: true, price: true } },
+      },
+    }).catch(() => []);
+
+    recentActivities = await prisma.activity.findMany({
+      take: 6,
+      orderBy: { createdAt: "desc" },
+      include: {
+        user: { select: { name: true, role: true } },
+      },
+    }).catch(() => []);
   } catch (error: unknown) {
     const err = error as { message?: string };
     console.warn("Admin dashboard telemetry notice:", err?.message || error);

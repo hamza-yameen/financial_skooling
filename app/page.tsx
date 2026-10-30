@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
+import LandingHero from "@/components/LandingHero";
 import RiskSimulator from "@/components/RiskSimulator";
 import HomeCourseCardFooter from "@/components/HomeCourseCardFooter";
 
@@ -47,109 +48,52 @@ export default async function HomePage() {
   });
 
   return (
-    <div className="relative overflow-hidden min-h-screen">
-      {/* Dynamic Background Mesh Blooms in Warm Sage & Sand */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1100px] h-[550px] bg-gradient-to-b from-[#8B9B6D]/20 via-[#EBE2D6]/40 to-transparent blur-[140px] pointer-events-none animate-mesh-slow" />
-      <div className="absolute top-[800px] left-[-200px] w-[500px] h-[500px] bg-[#8B9B6D]/15 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute top-[1700px] right-[-200px] w-[600px] h-[600px] bg-[#EBE2D6]/50 rounded-full blur-[160px] pointer-events-none" />
+    <div className="relative overflow-hidden min-h-screen bg-[#EDF1F5]">
+      {/* Background Ambient Blooms for Middle & Lower Sections */}
+      <div className="absolute top-[900px] left-[-200px] w-[500px] h-[500px] bg-[#31F2BF]/10 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute top-[1700px] right-[-200px] w-[600px] h-[600px] bg-[#34BCFF]/10 rounded-full blur-[160px] pointer-events-none" />
 
-      {/* Hero Section */}
-      <section className="relative pt-16 pb-20 md:pt-24 md:pb-28 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto space-y-6">
-          {/* Pill Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#8B9B6D]/15 border border-[#8B9B6D]/35 text-xs font-mono font-bold text-[#4A5836] shadow-sm animate-float">
-            <span className="w-2 h-2 rounded-full bg-[#5C6E42] animate-ping" />
-            <span className="tracking-wider uppercase">
-              ⚡ NEXT-GEN WEALTH ARCHITECTURE
-            </span>
-          </div>
+      {/* Modern High-Impact Hero Section matching Reference (100% Full Width with Embedded Header) */}
+      <LandingHero />
 
-          {/* Main Headline */}
-          <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-[#1C2417] leading-[1.08]">
-            Master Wealth Architecture, Credit Engineering &{" "}
-            <span className="text-gradient-primary">Financial Freedom.</span>
-          </h1>
-
-          {/* Subheading */}
-          <p className="text-base sm:text-lg text-[#636B58] leading-relaxed max-w-2xl mx-auto font-medium">
-            Strictly zero lifestyle hype or recycled trading signals. Financial Skool delivers exhaustive
-            manual-first playbooks, practical real estate pro formas, and algorithmic drawdown
-            mathematics for the new generation of wealth builders.
-          </p>
-
-          {/* Action CTAs */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-3">
-            <Link
-              href="/courses"
-              className="w-full sm:w-auto px-8 py-4 rounded-full bg-gradient-to-r from-[#5C6E42] via-[#6E8050] to-[#8B9B6D] text-white font-extrabold text-sm shadow-xl shadow-[#8B9B6D]/30 hover:shadow-[#8B9B6D]/45 hover:scale-[1.03] active:scale-95 transition-all flex items-center justify-center gap-2 group cursor-pointer"
-            >
-              Explore Programs & Labs
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </Link>
-
-            <Link
-              href="/simulator"
-              className="w-full sm:w-auto px-8 py-4 rounded-full bg-white hover:bg-[#F7F2EB] border border-[#EBE2D6] text-[#1C2417] font-bold text-sm shadow-xs transition-all flex items-center justify-center gap-2 hover:border-[#8B9B6D]/50"
-            >
-              <Cpu className="w-4 h-4 text-[#5C6E42]" />
-              Launch Risk Simulator
-            </Link>
-          </div>
-
-          {/* Trust Guarantees */}
-          <div className="pt-6 flex flex-wrap items-center justify-center gap-5 sm:gap-8 text-xs text-[#636B58] font-semibold font-mono">
-            <span className="flex items-center gap-1.5 bg-white px-3 py-1 rounded-full border border-[#EBE2D6] shadow-xs">
-              <CheckCircle2 className="w-4 h-4 text-[#5C6E42]" />
-              One-Time Lifetime Access
-            </span>
-            <span className="flex items-center gap-1.5 bg-white px-3 py-1 rounded-full border border-[#EBE2D6] shadow-xs">
-              <CheckCircle2 className="w-4 h-4 text-[#5C6E42]" />
-              PDF-First Field Manuals
-            </span>
-            <span className="flex items-center gap-1.5 bg-white px-3 py-1 rounded-full border border-[#EBE2D6] shadow-xs">
-              <CheckCircle2 className="w-4 h-4 text-[#5C6E42]" />
-              Zero Recurring Traps
-            </span>
-          </div>
-        </div>
-
-        {/* Live Metrics Ticker Bar */}
-        <div className="mt-16 grid grid-cols-2 lg:grid-cols-4 gap-4 p-5 rounded-3xl bg-white border border-[#EBE2D6] backdrop-blur-xl shadow-lg shadow-[#8B9B6D]/10">
+      {/* Live Metrics Ticker Bar - Increase Style */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 sm:-mt-10 mb-16 relative z-20">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 p-5 rounded-2xl bg-white border border-[#D5DEE5] shadow-sm">
           <div className="p-4 text-center sm:text-left">
-            <p className="text-xs uppercase font-mono font-bold text-[#7E8773]">Simulated Volume</p>
-            <p className="text-3xl font-black text-[#1C2417] mt-1 tracking-tight">€1.8M+</p>
-            <p className="text-xs font-semibold text-[#5C6E42] mt-0.5">Across 10k+ risk runs</p>
+            <p className="text-[11px] uppercase font-mono font-bold text-[#657482]">Simulated Volume</p>
+            <p className="text-3xl font-black text-[#1D2A36] mt-1 tracking-tight font-mono">€1.8M+</p>
+            <p className="text-xs font-semibold text-[#007554] mt-0.5">Across 10k+ risk runs</p>
           </div>
           <div className="p-4 text-center sm:text-left">
-            <p className="text-xs uppercase font-mono font-bold text-[#7E8773]">Curriculum Depth</p>
-            <p className="text-3xl font-black text-[#5C6E42] mt-1 tracking-tight">56+ Pages</p>
-            <p className="text-xs font-semibold text-[#636B58] mt-0.5">Structured technical manuals</p>
+            <p className="text-[11px] uppercase font-mono font-bold text-[#657482]">Curriculum Depth</p>
+            <p className="text-3xl font-black text-[#1D2A36] mt-1 tracking-tight font-mono">56+ Pages</p>
+            <p className="text-xs font-semibold text-[#657482] mt-0.5">Structured technical manuals</p>
           </div>
           <div className="p-4 text-center sm:text-left">
-            <p className="text-xs uppercase font-mono font-bold text-[#7E8773]">Subscription Trap</p>
-            <p className="text-3xl font-black text-[#5C6E42] mt-1 tracking-tight">0% Monthly</p>
-            <p className="text-xs font-semibold text-[#636B58] mt-0.5">Never recurring rebilled</p>
+            <p className="text-[11px] uppercase font-mono font-bold text-[#657482]">Subscription Trap</p>
+            <p className="text-3xl font-black text-[#007554] mt-1 tracking-tight font-mono">0% Monthly</p>
+            <p className="text-xs font-semibold text-[#657482] mt-0.5">Never recurring rebilled</p>
           </div>
           <div className="p-4 text-center sm:text-left">
-            <p className="text-xs uppercase font-mono font-bold text-[#7E8773]">Operator Rating</p>
-            <p className="text-3xl font-black text-[#1C2417] mt-1 tracking-tight">4.9 / 5.0</p>
-            <p className="text-xs font-semibold text-[#5C6E42] mt-0.5">Verified operator feedback</p>
+            <p className="text-[11px] uppercase font-mono font-bold text-[#657482]">Operator Rating</p>
+            <p className="text-3xl font-black text-[#1D2A36] mt-1 tracking-tight font-mono">4.9 / 5.0</p>
+            <p className="text-xs font-semibold text-[#007554] mt-0.5">Verified operator feedback</p>
           </div>
         </div>
       </section>
 
       {/* Featured Programs Section */}
-      <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-[#EBE2D6]">
+      <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-[#D5DEE5]">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12">
           <div>
-            <div className="inline-flex items-center gap-2 text-xs font-mono text-[#5C6E42] uppercase tracking-widest font-bold mb-2">
+            <div className="inline-flex items-center gap-2 text-xs font-mono text-[#007554] uppercase tracking-widest font-bold mb-2">
               <Layers className="w-3.5 h-3.5" />
               DYNAMIC CURRICULUM & LABS
             </div>
-            <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-[#1C2417]">
+            <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-[#1D2A36]">
               Institutional Programs & Specialized Labs
             </h2>
-            <p className="text-sm text-[#636B58] mt-1 max-w-xl font-medium">
+            <p className="text-sm text-[#657482] mt-1 max-w-xl font-medium">
               Engineered as definitive operational manuals. Every program unlocks instant, permanent
               student dashboard access with live tools and spreadsheet files.
             </p>
@@ -157,7 +101,7 @@ export default async function HomePage() {
 
           <Link
             href="/courses"
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-[#5C6E42] hover:text-[#384524]"
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-[#007554] hover:text-[#053226]"
           >
             Browse all specialized labs
             <ArrowRight className="w-3.5 h-3.5" />
@@ -169,20 +113,20 @@ export default async function HomePage() {
           {courses.map((course) => (
             <div
               key={course.id}
-              className="group rounded-3xl bg-white border border-[#EBE2D6] p-6 flex flex-col justify-between shadow-xs hover:shadow-2xl hover:shadow-[#8B9B6D]/15 hover:border-[#8B9B6D] hover:-translate-y-1.5 transition-all duration-300 relative overflow-hidden"
+              className="group rounded-2xl bg-white border border-[#D5DEE5] p-6 flex flex-col justify-between shadow-xs hover:shadow-xl hover:shadow-[#0C1927]/08 hover:border-[#8995A1] hover:-translate-y-1 transition-all duration-300 relative overflow-hidden"
             >
               {/* Color Bar */}
-              <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#5C6E42] via-[#8B9B6D] to-[#BAC8A1] opacity-85 group-hover:opacity-100 transition-opacity" />
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#1D2A36] via-[#007554] to-[#31F2BF] opacity-85 group-hover:opacity-100 transition-opacity" />
 
               <div className="space-y-4">
                 {/* Header Pills */}
                 <div className="flex items-center justify-between gap-2 pt-1">
-                  <span className="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-[#8B9B6D]/15 text-[#4A5836] border border-[#8B9B6D]/30">
+                  <span className="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-[#E3FFF3] text-[#007554] border border-[#31F2BF]/40 font-mono">
                     {course.category.name}
                   </span>
                   {course.badge && (
-                    <span className="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-[#EBE2D6] text-[#4A5836] border border-[#D8CEBE] shadow-xs flex items-center gap-1">
-                      <Sparkles className="w-3 h-3 text-[#5C6E42]" />
+                    <span className="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-[#EDF1F5] text-[#334352] border border-[#D5DEE5] shadow-xs flex items-center gap-1 font-mono">
+                      <Sparkles className="w-3 h-3 text-[#007554]" />
                       {course.badge}
                     </span>
                   )}
@@ -190,33 +134,33 @@ export default async function HomePage() {
 
                 {/* Title & Summary */}
                 <div>
-                  <h3 className="text-xl font-extrabold text-[#1C2417] group-hover:text-[#5C6E42] transition-colors tracking-tight line-clamp-1">
+                  <h3 className="text-xl font-extrabold text-[#1D2A36] group-hover:text-[#007554] transition-colors tracking-tight line-clamp-1">
                     {course.title}
                   </h3>
-                  <p className="text-xs text-[#636B58] mt-2 line-clamp-2 leading-relaxed font-medium">
+                  <p className="text-xs text-[#657482] mt-2 line-clamp-2 leading-relaxed font-medium">
                     {course.summary}
                   </p>
                 </div>
 
                 {/* Key Metadata Stats */}
-                <div className="flex items-center gap-3 text-xs font-mono font-medium text-[#7E8773] py-1 border-y border-[#EBE2D6]">
+                <div className="flex items-center gap-3 text-xs font-mono font-medium text-[#657482] py-1 border-y border-[#D5DEE5]">
                   <span className="flex items-center gap-1">
-                    <BookOpen className="w-3.5 h-3.5 text-[#5C6E42]" />
+                    <BookOpen className="w-3.5 h-3.5 text-[#007554]" />
                     {course._count.lessons} Modules
                   </span>
                   <span>•</span>
                   <span className="flex items-center gap-1">
-                    <Clock className="w-3.5 h-3.5 text-[#7E8773]" />
+                    <Clock className="w-3.5 h-3.5 text-[#657482]" />
                     {course.duration}
                   </span>
                 </div>
 
                 {/* Highlights List */}
-                <ul className="space-y-2 text-xs text-[#636B58] pt-1">
+                <ul className="space-y-2 text-xs text-[#657482] pt-1">
                   {course.highlights.slice(0, 2).map((h, i) => (
                     <li key={i} className="flex items-start gap-2">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-[#5C6E42] shrink-0 mt-0.5" />
-                      <span className="line-clamp-1 font-medium text-[#1C2417]">{h}</span>
+                      <CheckCircle2 className="w-3.5 h-3.5 text-[#007554] shrink-0 mt-0.5" />
+                      <span className="line-clamp-1 font-medium text-[#1D2A36]">{h}</span>
                     </li>
                   ))}
                 </ul>
@@ -230,16 +174,16 @@ export default async function HomePage() {
       </section>
 
       {/* Embedded Interactive Risk Simulator Preview */}
-      <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-[#EBE2D6]">
+      <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-[#D5DEE5]">
         <div className="text-center max-w-2xl mx-auto mb-10 space-y-3">
-          <div className="inline-flex items-center gap-2 text-xs font-mono text-[#5C6E42] uppercase tracking-widest font-bold">
+          <div className="inline-flex items-center gap-2 text-xs font-mono text-[#007554] uppercase tracking-widest font-bold">
             <Cpu className="w-3.5 h-3.5" />
             STANDALONE PROPRIETARY ENGINE
           </div>
-          <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-[#1C2417]">
+          <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-[#1D2A36]">
             Interactive Risk & Drawdown Simulator
           </h2>
-          <p className="text-sm text-[#636B58] font-medium">
+          <p className="text-sm text-[#657482] font-medium">
             Before executing in live financial markets or underwriting property loans, test your
             mathematical expectancy and risk envelope below.
           </p>
@@ -251,7 +195,7 @@ export default async function HomePage() {
         <div className="text-center mt-6">
           <Link
             href="/simulator"
-            className="inline-flex items-center gap-2 text-xs font-bold text-[#5C6E42] hover:text-[#384524]"
+            className="inline-flex items-center gap-2 text-xs font-bold text-[#007554] hover:text-[#053226]"
           >
             Open Fullscreen Simulator Dashboard with Advanced Kelly Analysis
             <ArrowRight className="w-3.5 h-3.5" />
@@ -260,47 +204,47 @@ export default async function HomePage() {
       </section>
 
       {/* The 4 Architectural Pillars Section */}
-      <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-[#EBE2D6]">
+      <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-[#D5DEE5]">
         <div className="text-center max-w-2xl mx-auto mb-14 space-y-3">
-          <div className="inline-flex items-center gap-2 text-xs font-mono text-[#5C6E42] uppercase tracking-widest font-bold">
+          <div className="inline-flex items-center gap-2 text-xs font-mono text-[#007554] uppercase tracking-widest font-bold">
             <BookOpen className="w-3.5 h-3.5" />
             THE FOUR CORE PILLARS
           </div>
-          <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-[#1C2417]">
+          <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-[#1D2A36]">
             How Financial Skool Operates
           </h2>
-          <p className="text-sm text-[#636B58] font-medium">
+          <p className="text-sm text-[#657482] font-medium">
             A cohesive trajectory designed to build resilient, asymmetric balance sheets.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="bg-white p-7 rounded-3xl border border-[#EBE2D6] shadow-xs space-y-4 hover:shadow-xl hover:shadow-[#8B9B6D]/15 hover:border-[#8B9B6D]/50 hover:-translate-y-1 transition-all">
-            <div className="w-12 h-12 rounded-2xl bg-[#8B9B6D]/15 border border-[#8B9B6D]/30 flex items-center justify-center text-[#4A5836] font-black font-mono text-lg">
+          <div className="bg-white p-7 rounded-2xl border border-[#D5DEE5] shadow-xs space-y-4 hover:shadow-xl hover:shadow-[#0C1927]/06 hover:border-[#8995A1] hover:-translate-y-1 transition-all">
+            <div className="w-12 h-12 rounded-xl bg-[#EDF1F5] border border-[#D5DEE5] flex items-center justify-center text-[#1D2A36] font-black font-mono text-lg">
               01
             </div>
-            <h3 className="text-base font-extrabold text-[#1C2417]">
+            <h3 className="text-base font-extrabold text-[#1D2A36]">
               Wealth & Credit Architecture
             </h3>
-            <p className="text-xs text-[#636B58] leading-relaxed font-medium">
+            <p className="text-xs text-[#657482] leading-relaxed font-medium">
               Household liquidity reservoirs, tier-1 commercial banking relationships, and non-recourse debt stacking.
             </p>
           </div>
 
-          <div className="bg-white p-7 rounded-3xl border border-[#EBE2D6] shadow-xs space-y-4 hover:shadow-xl hover:shadow-[#8B9B6D]/15 hover:border-[#8B9B6D]/50 hover:-translate-y-1 transition-all">
-            <div className="w-12 h-12 rounded-2xl bg-[#8B9B6D]/15 border border-[#8B9B6D]/30 flex items-center justify-center text-[#4A5836] font-black font-mono text-lg">
+          <div className="bg-white p-7 rounded-2xl border border-[#D5DEE5] shadow-xs space-y-4 hover:shadow-xl hover:shadow-[#0C1927]/06 hover:border-[#8995A1] hover:-translate-y-1 transition-all">
+            <div className="w-12 h-12 rounded-xl bg-[#EDF1F5] border border-[#D5DEE5] flex items-center justify-center text-[#1D2A36] font-black font-mono text-lg">
               02
             </div>
-            <h3 className="text-base font-extrabold text-[#1C2417]">
+            <h3 className="text-base font-extrabold text-[#1D2A36]">
               Real Estate Underwriting
             </h3>
-            <p className="text-xs text-[#636B58] leading-relaxed font-medium">
+            <p className="text-xs text-[#657482] leading-relaxed font-medium">
               Cap rate variance, NOI equations, DSCR covenant stress-testing, and dynamic private syndication waterfalls.
             </p>
           </div>
 
-          <div className="bg-white p-7 rounded-3xl border border-[#EBE2D6] shadow-xs space-y-4 hover:shadow-xl hover:shadow-[#8B9B6D]/15 hover:border-[#8B9B6D]/50 hover:-translate-y-1 transition-all">
-            <div className="w-12 h-12 rounded-2xl bg-[#8B9B6D]/15 border border-[#8B9B6D]/30 flex items-center justify-center text-[#4A5836] font-black font-mono text-lg">
+          <div className="bg-white p-7 rounded-2xl border border-[#D5DEE5] shadow-xs space-y-4 hover:shadow-xl hover:shadow-[#0C1927]/06 hover:border-[#8995A1] hover:-translate-y-1 transition-all">
+            <div className="w-12 h-12 rounded-xl bg-[#EDF1F5] border border-[#D5DEE5] flex items-center justify-center text-[#1D2A36] font-black font-mono text-lg">
               03
             </div>
             <h3 className="text-base font-extrabold text-[#1C2417]">

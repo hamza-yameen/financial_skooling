@@ -28,19 +28,21 @@ enum EnrollmentStatus {
 }
 
 model User {
-  id             String           @id @default(cuid())
-  email          String           @unique
-  password       String
-  name           String
-  role           Role             @default(STUDENT)
-  avatar         String?
-  bio            String?
-  createdAt      DateTime         @default(now())
-  updatedAt      DateTime         @updatedAt
-  enrollments    Enrollment[]
-  lessonProgress LessonProgress[]
-  activities     Activity[]
-  reviews        Review[]
+  id                 String              @id @default(cuid())
+  email              String              @unique
+  password           String
+  name               String
+  role               Role                @default(STUDENT)
+  credits            Int                 @default(100)
+  avatar             String?
+  bio                String?
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  enrollments        Enrollment[]
+  lessonProgress     LessonProgress[]
+  activities         Activity[]
+  reviews            Review[]
+  creditTransactions CreditTransaction[]
 }
 
 model Category {
@@ -63,6 +65,7 @@ model Course {
   summary          String
   description      String
   price            Float
+  creditsCost      Int          @default(25)
   originalPrice    Float?
   currency         String       @default("EUR")
   level            Level        @default(BEGINNER)
@@ -112,6 +115,7 @@ model Enrollment {
   courseId       String
   course         Course           @relation(fields: [courseId], references: [id], onDelete: Cascade)
   pricePaid      Float
+  creditsSpent   Int?
   currency       String           @default("EUR")
   paymentMethod  String           @default("MOCK_CARD")
   billingDetails String?
@@ -157,4 +161,34 @@ model Review {
   studentName String
   studentRole String?
   createdAt   DateTime @default(now())
+}
+
+model CreditTransaction {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  amount      Int      // +amount (purchase, bonus) or -amount (spend)
+  type        String   // "PURCHASE", "ENROLLMENT", "BONUS", "REFUND", "WELCOME_BONUS"
+  description String
+  metadata    String?  // JSON string
+  createdAt   DateTime @default(now())
+}
+
+model CreditPackage {
+  id           String   @id @default(cuid())
+  name         String
+  tagline      String?
+  description  String?
+  credits      Int
+  bonusCredits Int      @default(0)
+  price        Float    // Price in EUR
+  priceGbp     Float?   // Price in GBP
+  currency     String   @default("EUR")
+  badge        String?
+  popular      Boolean  @default(false)
+  features     String[] @default([])
+  order        Int      @default(0)
+  published    Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }

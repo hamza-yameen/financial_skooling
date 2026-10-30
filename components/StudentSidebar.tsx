@@ -16,9 +16,11 @@ import {
   Flame,
   ArrowUpRight,
   ShieldAlert,
+  Coins,
 } from "lucide-react";
 import BrandIcon from "./BrandIcon";
 import { toast } from "sonner";
+import { useCurrencyCart } from "./CurrencyCartContext";
 
 interface SessionUserData {
   id: string;
@@ -30,12 +32,14 @@ interface SessionUserData {
 export default function StudentSidebar({ user }: { user: SessionUserData }) {
   const pathname = usePathname();
   const router = useRouter();
+  const { userCredits, setIsCreditsModalOpen } = useCurrencyCart();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [loggingOut, setLoggingOut] = useState(false);
 
   const navLinks = [
     { label: "Dashboard", href: "/student/dashboard", icon: LayoutDashboard },
     { label: "My Enrolled Courses", href: "/student/courses", icon: BookOpen },
+    { label: "Credits & Wallet", href: "/student/credits", icon: Coins, badge: "Wallet" },
     { label: "Activity Stream", href: "/student/activity", icon: Activity },
     { label: "Profile & Settings", href: "/student/profile", icon: User },
   ];
@@ -80,7 +84,7 @@ export default function StudentSidebar({ user }: { user: SessionUserData }) {
 
       {/* Sidebar Desktop & Mobile Drawer */}
       <aside
-        className={`fixed md:sticky top-0 left-0 z-50 md:z-0 w-72 h-screen bg-white border-r border-[#EBE2D6] shadow-sm flex flex-col justify-between transition-transform duration-300 md:translate-x-0 ${
+        className={`fixed md:sticky top-0 left-0 z-50 md:z-0 w-72 h-screen bg-white border-r border-[#D5DEE5] shadow-xs flex flex-col justify-between transition-transform duration-300 md:translate-x-0 ${
           mobileOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
@@ -90,10 +94,10 @@ export default function StudentSidebar({ user }: { user: SessionUserData }) {
             <Link href="/" className="flex items-center gap-3 group">
               <BrandIcon className="w-9 h-9 rounded-xl shadow-xs" />
               <div>
-                <span className="text-base font-bold text-[#1C2417] tracking-tight group-hover:text-[#5C6E42] transition-colors">
-                  Financial <span className="text-[#5C6E42]">Skool</span>
+                <span className="text-base font-bold text-[#1D2A36] tracking-tight group-hover:text-[#007554] transition-colors">
+                  Financial <span className="text-[#007554]">Skool</span>
                 </span>
-                <span className="block text-[10px] font-mono uppercase tracking-wider text-[#4A5836]">
+                <span className="block text-[10px] font-mono uppercase tracking-wider text-[#657482]">
                   STUDENT TERMINAL
                 </span>
               </div>
@@ -101,31 +105,50 @@ export default function StudentSidebar({ user }: { user: SessionUserData }) {
 
             <button
               onClick={() => setMobileOpen(false)}
-              className="md:hidden p-1 text-slate-400 hover:text-slate-700"
+              className="md:hidden p-1 text-[#657482] hover:text-[#1D2A36]"
             >
               <X className="w-5 h-5" />
             </button>
           </div>
 
-          {/* Student Status Card */}
-          <div className="p-3.5 rounded-xl bg-[#8B9B6D]/15 border border-[#8B9B6D]/30 text-xs space-y-2">
+          {/* Student Status Card - Increase Style */}
+          <div className="p-3.5 rounded-xl bg-[#E3FFF3] border border-[#31F2BF]/40 text-xs space-y-2">
             <div className="flex items-center justify-between">
-              <span className="font-semibold text-[#1C2417] flex items-center gap-1.5">
+              <span className="font-semibold text-[#1D2A36] flex items-center gap-1.5 font-mono">
                 <Flame className="w-4 h-4 text-amber-500 fill-amber-500" />
                 5-Day Study Streak
               </span>
-              <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 border border-emerald-300 font-bold">
+              <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-[#31F2BF]/30 text-[#007554] border border-[#31F2BF]/50 font-bold">
                 ACTIVE
               </span>
             </div>
-            <p className="text-[11px] text-[#4A5836] leading-snug">
+            <p className="text-[11px] text-[#007554] leading-snug">
               Consistent daily review reinforces quantitative risk principles.
             </p>
           </div>
 
+          {/* Credits Wallet Widget */}
+          <div className="p-3.5 rounded-xl bg-[#F5F8FA] border border-[#D5DEE5] text-xs space-y-2 shadow-xs">
+            <div className="flex items-center justify-between">
+              <span className="font-semibold text-[#1D2A36] flex items-center gap-1.5 font-mono">
+                <Coins className="w-4 h-4 text-[#007554]" />
+                Credits Balance
+              </span>
+              <span className="text-xs font-black font-mono text-[#007554]">
+                {userCredits !== null ? `${userCredits} Cr` : "0 Cr"}
+              </span>
+            </div>
+            <Link
+              href="/credits"
+              className="w-full py-1.5 rounded-lg bg-[#1D2A36] hover:bg-[#132030] text-white text-[11px] font-bold font-mono transition-colors cursor-pointer flex items-center justify-center gap-1 border border-[#132030]"
+            >
+              <span>+ Top Up Credits</span>
+            </Link>
+          </div>
+
           {/* Navigation Links */}
           <div className="space-y-1">
-            <span className="text-[10px] font-mono uppercase tracking-wider text-[#4A5836] font-semibold px-3 block mb-2">
+            <span className="text-[10px] font-mono uppercase tracking-wider text-[#657482] font-semibold px-3 block mb-2">
               WORKSPACE
             </span>
             {navLinks.map((item) => {
@@ -138,13 +161,13 @@ export default function StudentSidebar({ user }: { user: SessionUserData }) {
                   onClick={() => setMobileOpen(false)}
                   className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold transition-all ${
                     isActive
-                      ? "bg-[#8B9B6D]/15 text-[#2E3C1B] shadow-xs font-bold border-l-4 border-[#5C6E42]"
-                      : "text-slate-600 hover:text-slate-900 hover:bg-[#F7F2EB]/60"
+                      ? "bg-[#EDF1F5] text-[#1D2A36] shadow-xs font-bold border-l-4 border-[#1D2A36]"
+                      : "text-[#657482] hover:text-[#1D2A36] hover:bg-[#F5F8FA]"
                   }`}
                 >
                   <Icon
                     className={`w-4 h-4 ${
-                      isActive ? "text-[#5C6E42]" : "text-slate-400"
+                      isActive ? "text-[#1D2A36]" : "text-[#8995A1]"
                     }`}
                   />
                   {item.label}

@@ -56,7 +56,7 @@ globalThis.__BUILD_MANIFEST = {
       "static/chunks/turbopack-_151e-262_whcu._.js",
       "static/chunks/_1fav_h-fdhx52._.js"
     ],
-    "/login/page": [
+    "/admin/credit-packages/page": [
       "static/chunks/[turbopack]_browser_dev_hmr-client_hmr-client_ts_0xhz3rou1mumm._.js",
       "static/chunks/1bba_next_dist_compiled_react-dom_cjs_react-dom-client_development_1p5dn8zfx19iq.js",
       "static/chunks/1bba_next_dist_compiled_react-dom_cjs_react-dom_development_0_x_123egwcn0.js",
@@ -69,9 +69,9 @@ globalThis.__BUILD_MANIFEST = {
       "static/chunks/0zix_@swc_helpers_cjs_0hi-e474n4mns._.js",
       "static/chunks/_1anvha4rlo79g._.js",
       "static/chunks/turbopack-_151e-262_whcu._.js",
-      "static/chunks/_1urspxgmkk327._.js"
+      "static/chunks/_0ap9ylzodc7pk._.js"
     ],
-    "/admin/courses/page": [
+    "/credits/page": [
       "static/chunks/[turbopack]_browser_dev_hmr-client_hmr-client_ts_0xhz3rou1mumm._.js",
       "static/chunks/1bba_next_dist_compiled_react-dom_cjs_react-dom-client_development_1p5dn8zfx19iq.js",
       "static/chunks/1bba_next_dist_compiled_react-dom_cjs_react-dom_development_0_x_123egwcn0.js",
@@ -84,9 +84,9 @@ globalThis.__BUILD_MANIFEST = {
       "static/chunks/0zix_@swc_helpers_cjs_0hi-e474n4mns._.js",
       "static/chunks/_1anvha4rlo79g._.js",
       "static/chunks/turbopack-_151e-262_whcu._.js",
-      "static/chunks/_0169v45__s9eq._.js"
+      "static/chunks/_1i_67-l39iktt._.js"
     ],
-    "/admin/categories/page": [
+    "/checkout/credits/[packageId]/page": [
       "static/chunks/[turbopack]_browser_dev_hmr-client_hmr-client_ts_0xhz3rou1mumm._.js",
       "static/chunks/1bba_next_dist_compiled_react-dom_cjs_react-dom-client_development_1p5dn8zfx19iq.js",
       "static/chunks/1bba_next_dist_compiled_react-dom_cjs_react-dom_development_0_x_123egwcn0.js",
@@ -99,127 +99,7 @@ globalThis.__BUILD_MANIFEST = {
       "static/chunks/0zix_@swc_helpers_cjs_0hi-e474n4mns._.js",
       "static/chunks/_1anvha4rlo79g._.js",
       "static/chunks/turbopack-_151e-262_whcu._.js",
-      "static/chunks/_0ymriz-ev-ej5._.js"
-    ],
-    "/admin/students/page": [
-      "static/chunks/[turbopack]_browser_dev_hmr-client_hmr-client_ts_0xhz3rou1mumm._.js",
-      "static/chunks/1bba_next_dist_compiled_react-dom_cjs_react-dom-client_development_1p5dn8zfx19iq.js",
-      "static/chunks/1bba_next_dist_compiled_react-dom_cjs_react-dom_development_0_x_123egwcn0.js",
-      "static/chunks/1bba_next_dist_compiled_react-dom_0f_248veaaj5v._.js",
-      "static/chunks/1bba_next_dist_compiled_react-server-dom-turbopack_0wmfvt0g6mw-o._.js",
-      "static/chunks/1bba_next_dist_compiled_next-devtools_index_10c9fedg95h14.js",
-      "static/chunks/1bba_next_dist_compiled_0qn3j0562166o._.js",
-      "static/chunks/1bba_next_dist_client_0ru2jkh0js1s8._.js",
-      "static/chunks/1bba_next_dist_041c6vio7na_y._.js",
-      "static/chunks/0zix_@swc_helpers_cjs_0hi-e474n4mns._.js",
-      "static/chunks/_1anvha4rlo79g._.js",
-      "static/chunks/turbopack-_151e-262_whcu._.js",
-      "static/chunks/_1hre6zphhiix7._.js"
-    ],
-    "/admin/enrollments/page": [
-      "static/chunks/[turbopack]_browser_dev_hmr-client_hmr-client_ts_0xhz3rou1mumm._.js",
-      "static/chunks/1bba_next_dist_compiled_react-dom_cjs_react-dom-client_development_1p5dn8zfx19iq.js",
-      "static/chunks/1bba_next_dist_compiled_react-dom_cjs_react-dom_development_0_x_123egwcn0.js",
-      "static/chunks/1bba_next_dist_compiled_react-dom_0f_248veaaj5v._.js",
-      "static/chunks/1bba_next_dist_compiled_react-server-dom-turbopack_0wmfvt0g6mw-o._.js",
-      "static/chunks/1bba_next_dist_compiled_next-devtools_index_10c9fedg95h14.js",
-      "static/chunks/1bba_next_dist_compiled_0qn3j0562166o._.js",
-      "static/chunks/1bba_next_dist_client_0ru2jkh0js1s8._.js",
-      "static/chunks/1bba_next_dist_041c6vio7na_y._.js",
-      "static/chunks/0zix_@swc_helpers_cjs_0hi-e474n4mns._.js",
-      "static/chunks/_1anvha4rlo79g._.js",
-      "static/chunks/turbopack-_151e-262_whcu._.js",
-      "static/chunks/_0dsmde5v_e6kr._.js"
-    ],
-    "/admin/activity/page": [
-      "static/chunks/[turbopack]_browser_dev_hmr-client_hmr-client_ts_0xhz3rou1mumm._.js",
-      "static/chunks/1bba_next_dist_compiled_react-dom_cjs_react-dom-client_development_1p5dn8zfx19iq.js",
-      "static/chunks/1bba_next_dist_compiled_react-dom_cjs_react-dom_development_0_x_123egwcn0.js",
-      "static/chunks/1bba_next_dist_compiled_react-dom_0f_248veaaj5v._.js",
-      "static/chunks/1bba_next_dist_compiled_react-server-dom-turbopack_0wmfvt0g6mw-o._.js",
-      "static/chunks/1bba_next_dist_compiled_next-devtools_index_10c9fedg95h14.js",
-      "static/chunks/1bba_next_dist_compiled_0qn3j0562166o._.js",
-      "static/chunks/1bba_next_dist_client_0ru2jkh0js1s8._.js",
-      "static/chunks/1bba_next_dist_041c6vio7na_y._.js",
-      "static/chunks/0zix_@swc_helpers_cjs_0hi-e474n4mns._.js",
-      "static/chunks/_1anvha4rlo79g._.js",
-      "static/chunks/turbopack-_151e-262_whcu._.js",
-      "static/chunks/_0z7ujqfzr91-_._.js"
-    ],
-    "/student/courses/page": [
-      "static/chunks/[turbopack]_browser_dev_hmr-client_hmr-client_ts_0xhz3rou1mumm._.js",
-      "static/chunks/1bba_next_dist_compiled_react-dom_cjs_react-dom-client_development_1p5dn8zfx19iq.js",
-      "static/chunks/1bba_next_dist_compiled_react-dom_cjs_react-dom_development_0_x_123egwcn0.js",
-      "static/chunks/1bba_next_dist_compiled_react-dom_0f_248veaaj5v._.js",
-      "static/chunks/1bba_next_dist_compiled_react-server-dom-turbopack_0wmfvt0g6mw-o._.js",
-      "static/chunks/1bba_next_dist_compiled_next-devtools_index_10c9fedg95h14.js",
-      "static/chunks/1bba_next_dist_compiled_0qn3j0562166o._.js",
-      "static/chunks/1bba_next_dist_client_0ru2jkh0js1s8._.js",
-      "static/chunks/1bba_next_dist_041c6vio7na_y._.js",
-      "static/chunks/0zix_@swc_helpers_cjs_0hi-e474n4mns._.js",
-      "static/chunks/_1anvha4rlo79g._.js",
-      "static/chunks/turbopack-_151e-262_whcu._.js",
-      "static/chunks/_1ikyh488s1_1r._.js"
-    ],
-    "/courses/page": [
-      "static/chunks/[turbopack]_browser_dev_hmr-client_hmr-client_ts_0xhz3rou1mumm._.js",
-      "static/chunks/1bba_next_dist_compiled_react-dom_cjs_react-dom-client_development_1p5dn8zfx19iq.js",
-      "static/chunks/1bba_next_dist_compiled_react-dom_cjs_react-dom_development_0_x_123egwcn0.js",
-      "static/chunks/1bba_next_dist_compiled_react-dom_0f_248veaaj5v._.js",
-      "static/chunks/1bba_next_dist_compiled_react-server-dom-turbopack_0wmfvt0g6mw-o._.js",
-      "static/chunks/1bba_next_dist_compiled_next-devtools_index_10c9fedg95h14.js",
-      "static/chunks/1bba_next_dist_compiled_0qn3j0562166o._.js",
-      "static/chunks/1bba_next_dist_client_0ru2jkh0js1s8._.js",
-      "static/chunks/1bba_next_dist_041c6vio7na_y._.js",
-      "static/chunks/0zix_@swc_helpers_cjs_0hi-e474n4mns._.js",
-      "static/chunks/_1anvha4rlo79g._.js",
-      "static/chunks/turbopack-_151e-262_whcu._.js",
-      "static/chunks/_0sm7fjvjwccv9._.js"
-    ],
-    "/courses/[slug]/page": [
-      "static/chunks/[turbopack]_browser_dev_hmr-client_hmr-client_ts_0xhz3rou1mumm._.js",
-      "static/chunks/1bba_next_dist_compiled_react-dom_cjs_react-dom-client_development_1p5dn8zfx19iq.js",
-      "static/chunks/1bba_next_dist_compiled_react-dom_cjs_react-dom_development_0_x_123egwcn0.js",
-      "static/chunks/1bba_next_dist_compiled_react-dom_0f_248veaaj5v._.js",
-      "static/chunks/1bba_next_dist_compiled_react-server-dom-turbopack_0wmfvt0g6mw-o._.js",
-      "static/chunks/1bba_next_dist_compiled_next-devtools_index_10c9fedg95h14.js",
-      "static/chunks/1bba_next_dist_compiled_0qn3j0562166o._.js",
-      "static/chunks/1bba_next_dist_client_0ru2jkh0js1s8._.js",
-      "static/chunks/1bba_next_dist_041c6vio7na_y._.js",
-      "static/chunks/0zix_@swc_helpers_cjs_0hi-e474n4mns._.js",
-      "static/chunks/_1anvha4rlo79g._.js",
-      "static/chunks/turbopack-_151e-262_whcu._.js",
-      "static/chunks/_1rqpyw30ghf99._.js"
-    ],
-    "/checkout/[courseSlug]/page": [
-      "static/chunks/[turbopack]_browser_dev_hmr-client_hmr-client_ts_0xhz3rou1mumm._.js",
-      "static/chunks/1bba_next_dist_compiled_react-dom_cjs_react-dom-client_development_1p5dn8zfx19iq.js",
-      "static/chunks/1bba_next_dist_compiled_react-dom_cjs_react-dom_development_0_x_123egwcn0.js",
-      "static/chunks/1bba_next_dist_compiled_react-dom_0f_248veaaj5v._.js",
-      "static/chunks/1bba_next_dist_compiled_react-server-dom-turbopack_0wmfvt0g6mw-o._.js",
-      "static/chunks/1bba_next_dist_compiled_next-devtools_index_10c9fedg95h14.js",
-      "static/chunks/1bba_next_dist_compiled_0qn3j0562166o._.js",
-      "static/chunks/1bba_next_dist_client_0ru2jkh0js1s8._.js",
-      "static/chunks/1bba_next_dist_041c6vio7na_y._.js",
-      "static/chunks/0zix_@swc_helpers_cjs_0hi-e474n4mns._.js",
-      "static/chunks/_1anvha4rlo79g._.js",
-      "static/chunks/turbopack-_151e-262_whcu._.js",
-      "static/chunks/_0s1m2ti10icm_._.js"
-    ],
-    "/student/dashboard/page": [
-      "static/chunks/[turbopack]_browser_dev_hmr-client_hmr-client_ts_0xhz3rou1mumm._.js",
-      "static/chunks/1bba_next_dist_compiled_react-dom_cjs_react-dom-client_development_1p5dn8zfx19iq.js",
-      "static/chunks/1bba_next_dist_compiled_react-dom_cjs_react-dom_development_0_x_123egwcn0.js",
-      "static/chunks/1bba_next_dist_compiled_react-dom_0f_248veaaj5v._.js",
-      "static/chunks/1bba_next_dist_compiled_react-server-dom-turbopack_0wmfvt0g6mw-o._.js",
-      "static/chunks/1bba_next_dist_compiled_next-devtools_index_10c9fedg95h14.js",
-      "static/chunks/1bba_next_dist_compiled_0qn3j0562166o._.js",
-      "static/chunks/1bba_next_dist_client_0ru2jkh0js1s8._.js",
-      "static/chunks/1bba_next_dist_041c6vio7na_y._.js",
-      "static/chunks/0zix_@swc_helpers_cjs_0hi-e474n4mns._.js",
-      "static/chunks/_1anvha4rlo79g._.js",
-      "static/chunks/turbopack-_151e-262_whcu._.js",
-      "static/chunks/_048_auy7v771h._.js"
+      "static/chunks/_09uq5_ryd9uj6._.js"
     ]
   },
   "pagesChunkGroupBootstrapParams": {},

@@ -41,9 +41,10 @@ const createPrismaClient = () => {
     new Pool({
       connectionString: cleanConnectionString,
       ssl: requiresSsl ? { rejectUnauthorized: false } : undefined,
-      max: 10, // Generous client pool to prevent queue starvation
-      idleTimeoutMillis: 10000,
-      connectionTimeoutMillis: 10000,
+      max: process.env.NODE_ENV === "production" ? 4 : 2, // Low connection ceiling for DigitalOcean cluster limits
+      idleTimeoutMillis: 1500, // Quickly return idle connections to prevent exhausting DO pool slots
+      connectionTimeoutMillis: 6000,
+      allowExitOnIdle: true,
     });
 
   // Critical for node-postgres: prevents uncaught EventEmitter crashes when idle connections close
